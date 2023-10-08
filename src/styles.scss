@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+// @use "../dist/ktbz-ui/styles/index" as ui;
+@use "./assets/styles/core/index";
+@use "./assets/styles/components/button";
+@use "./assets/styles/components/card";
+@use "./assets/styles/components/form";
+
+:root {
+  font-family: var(--text-font);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.required-mark {
+  color: var(--error-100);
+}
+
+hr.separator {
+  margin-block: 2px;
+  border: unset;
+  border-bottom: 1px solid var(--neutral-50);
+}
