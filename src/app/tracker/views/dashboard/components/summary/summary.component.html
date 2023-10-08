@@ -1,0 +1,12 @@
+<div class="card summary">
+  <ktbz-badge variant="normal" [isAbsolute]="true">
+    {{ summaryData.name }}</ktbz-badge
+  >
+  <label class="text-subtitle">Bilans</label>
+  <span class="text-title">
+    {{ summaryData.balance | currency : summaryData.currency }}</span
+  >
+  <div class="summary-range" *ngIf="summaryData.income && summaryData.outcome">
+    <div class="summary-range__slider" [style.width.%]="rangeWidth"></div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+.calendar {
+  padding: 16px;
+  border: 1px solid var(--neutral-100);
+  border-radius: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  user-select: none;
+  background-color: var(--neutral-0);
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__weeks,
+  &__days {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  &__years {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  &__year {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    align-self: center;
+    text-align: center;
+    border: 1px solid var(--neutral-0);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+      border 0.2s ease-in-out;
+  }
+
+  &__week,
+  &__day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    align-self: center;
+    text-align: center;
+    border: 1px solid var(--neutral-0);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+      border 0.2s ease-in-out;
+  }
+
+  &__day,
+  &__year {
+    user-select: none;
+    cursor: pointer;
+    border-radius: 8px;
+
+    &--readonly {
+      color: var(--neutral-100);
+      cursor: default;
+    }
+
+    &--in-range {
+      border-radius: 0;
+      background-color: rgba($color: #6880f6, $alpha: 0.24);
+      border: 1px solid transparent;
+    }
+
+    &--selected:has(+ &--in-range) {
+      border-radius: 8px 0 0 8px;
+    }
+
+    &--in-range + &--selected {
+      border-radius: 0 8px 8px 0;
+    }
+
+    &--current {
+      border: 1px solid var(--primary-300);
+    }
+
+    &--selected {
+      color: var(--neutral-0);
+      background-color: var(--primary-300);
+      border: 1px solid var(--primary-300);
+    }
+  }
+
+  &__day {
+    &:not(.calendar__day--readonly):not(.calendar__day--selected):hover {
+      background-color: var(--neutral-100);
+    }
+  }
+
+  &__year {
+    &:not(.calendar__year--readonly):not(.calendar__year--selected):hover {
+      background-color: var(--neutral-100);
+    }
+  }
+}

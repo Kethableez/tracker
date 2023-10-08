@@ -1,0 +1,46 @@
+<span class="breadcrumbs">
+  <ng-container *ngIf="events$ | async"></ng-container>
+  <ng-container *ngIf="truncated; else default">
+    <span
+      class="breadcrumb"
+      *ngFor="let breadcrumb of visibleBreadcrumbs; let l = last; let f = first"
+    >
+      <a class="breadcrumb__link" [ngClass]="{ active: l }">{{
+        breadcrumb.label
+      }}</a>
+      <i-tabler *ngIf="!l" name="chevron-right"></i-tabler>
+      <ng-container *ngIf="f && hiddenBreadcrumbs.length">
+        <span class="breadcrumb__btn" (click)="toggleDropdown()">...</span>
+        <i-tabler *ngIf="!l" name="chevron-right"></i-tabler>
+        <div
+          class="breadcrumb__dropdown"
+          *ngIf="dropdownState === 'open'"
+          @expandCollapse
+        >
+          <div class="breadcrumb__dropdown--options">
+            <div
+              class="breadcrumb__dropdown--option"
+              *ngFor="let bc of hiddenBreadcrumbs"
+            >
+              {{ bc.label }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </span>
+  </ng-container>
+  <ng-template #default>
+    <span
+      class="breadcrumb"
+      *ngFor="let breadcrumb of breadcrumbs; let l = last"
+    >
+      <a
+        class="breadcrumb__link"
+        [routerLink]="breadcrumb.links"
+        [ngClass]="{ active: breadcrumb.path === activePath }"
+        >{{ breadcrumb.label }}</a
+      >
+      <i-tabler *ngIf="!l" name="chevron-right"></i-tabler>
+    </span>
+  </ng-template>
+</span>

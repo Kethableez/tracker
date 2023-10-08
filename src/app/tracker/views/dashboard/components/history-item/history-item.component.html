@@ -1,0 +1,7 @@
+<div class="card history-item">
+  <label class="text-bold"> {{ item.name }}</label>
+  <span class="badge text-regular"> {{ item.category }}</span>
+  <span class="currency text-semi-bold" [ngClass]="amountClass">
+    {{ item.amount | currency : currency }}</span
+  >
+</div>

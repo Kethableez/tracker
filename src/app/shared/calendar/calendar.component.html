@@ -1,0 +1,90 @@
+<div class="calendar">
+  <div class="calendar__header">
+    <button
+      ktbzBtn
+      variant="neutral"
+      [onlyIcon]="true"
+      size="small"
+      (click)="previous()"
+    >
+      <i-tabler name="chevron-left"></i-tabler>
+    </button>
+    <button ktbzBtn variant="neutral" size="small" (click)="toggleMode()">
+      <span class="text-semi-bold text-primary">
+        <ng-container *ngIf="mode === 'days'; else yearsButton">
+          {{ months[anchorMonth] }},{{ anchorYear }}
+        </ng-container>
+        <ng-template #yearsButton> {{ yearFrom }} - {{ yearTo }}</ng-template>
+      </span>
+    </button>
+    <button
+      ktbzBtn
+      variant="neutral"
+      [onlyIcon]="true"
+      size="small"
+      (click)="next()"
+    >
+      <i-tabler name="chevron-right"></i-tabler>
+    </button>
+  </div>
+  <ng-container *ngIf="mode === 'days'; else yearsSelection">
+    <div class="calendar__weeks">
+      <span
+        class="calendar__week text-semi-bold text-caption"
+        *ngFor="let week of weeks"
+      >
+        {{ week }}</span
+      >
+    </div>
+    <div class="calendar__days">
+      <span
+        class="calendar__day"
+        *ngFor="let day of daysInSelectedMonth"
+        [ngClass]="{
+          'calendar__day--readonly': day.displayOnly,
+          'calendar__day--current': isToday(day.label, day.displayOnly),
+          'calendar__day--selected': isSelected(day.label, day.displayOnly),
+          'calendar__day--in-range': inRange(day.label, day.displayOnly)
+        }"
+        (click)="selectDay(day.label, day.displayOnly)"
+      >
+        {{ day.label }}</span
+      >
+    </div>
+  </ng-container>
+  <ng-template #yearsSelection>
+    <div class="calendar__years">
+      <span
+        class="calendar__year"
+        *ngFor="let year of yearsList"
+        [ngClass]="{
+          'calendar__year--current': year === today.getFullYear(),
+          'calendar__year--selected': year === anchorYear
+        }"
+        (click)="selectYear(year)"
+      >
+        {{ year }}</span
+      >
+    </div>
+  </ng-template>
+  <div class="calendar__buttons">
+    <button
+      *ngIf="range"
+      ktbzBtn
+      variant="neutral"
+      size="small"
+      (click)="resetRange()"
+    >
+      Reset
+    </button>
+    <button ktbzBtn variant="ghost" size="small" (click)="resetDate()">
+      Today
+    </button>
+  </div>
+</div>
+<!-- [ngClass]="{
+  'calendar__day--past':
+    day.state === 'previous-month' || day.state === 'next-month',
+  'calendar__day--current': day.state === 'current-day',
+  'calendar__day--selected': day.state === 'selected'
+}" -->

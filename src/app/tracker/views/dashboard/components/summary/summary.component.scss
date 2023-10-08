@@ -1,0 +1,32 @@
+:host-context {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.summary {
+  margin-top: 16px;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  ktbz-badge {
+    top: 16px;
+    right: 16px;
+    transform: none;
+  }
+}
+
+.summary-range {
+  margin-top: 8px;
+  display: flex;
+  border-radius: 999px;
+  background-color: red;
+  height: 4px;
+  overflow: hidden;
+
+  &__slider {
+    background-color: green;
+  }
+}

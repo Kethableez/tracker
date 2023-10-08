@@ -1,0 +1,23 @@
+<div class="notification" [ngClass]="type">
+  <i-tabler
+    [name]="iconsMap[type]"
+    [ngClass]="type"
+    class="no-shrink"
+  ></i-tabler>
+  <div class="notification__content">
+    <span class="text-black text-secondary text-bold">{{ header }}</span>
+    <span class="text-black text-secondary">{{ message }}</span>
+  </div>
+  <button ktbzBtn size="small" variant="ghost" *ngIf="withAction">
+    <span class="text-regular">Action</span>
+  </button>
+  <button
+    ktbzBtn
+    size="small"
+    variant="normal"
+    [onlyIcon]="true"
+    (click)="close()"
+  >
+    <i-tabler name="x"></i-tabler>
+  </button>
+</div>

@@ -1,0 +1,14 @@
+<div class="radio-group__container">
+  <label class="text-primary text-bold" [for]="controlName">
+    {{ label }} <span class="required-mark" *ngIf="required">*</span></label
+  >
+  <div class="radio-group__row" [ngClass]="statusClass">
+    <ng-content></ng-content>
+  </div>
+  <ktbz-input-error
+    [@expandCollapse]="validationEnabled"
+    *ngIf="validationEnabled && formControl.errors"
+    [errors]="formControl.errors"
+    [keys]="errorKeys"
+  ></ktbz-input-error>
+</div>

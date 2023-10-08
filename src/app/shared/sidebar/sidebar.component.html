@@ -1,0 +1,9 @@
+<nav class="sidebar">
+  <h2 class="sidebar__header">Logo</h2>
+  <hr class="sidebar__hr" />
+  <!-- <ktbz-sidebar-item></ktbz-sidebar-item> -->
+  <div class="sidebar__items">
+    <ktbz-sidebar-item *ngFor="let item of appRoutes" [menuItem]="item">
+    </ktbz-sidebar-item>
+  </div>
+</nav>

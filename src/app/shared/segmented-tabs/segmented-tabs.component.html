@@ -1,0 +1,9 @@
+<div class="segmented-tabs">
+  <span
+    class="tab text-semi-bold"
+    [class.active]="tab.value === activeTab"
+    (click)="selectTab(tab.value)"
+    *ngFor="let tab of tabs; let i = index"
+    >{{ tab.label }}</span
+  >
+</div>

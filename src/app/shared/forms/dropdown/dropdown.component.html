@@ -1,0 +1,52 @@
+<div class="dropdown__container">
+  <label class="text-primary text-bold" [for]="controlName">
+    {{ label }} <span class="required-mark" *ngIf="required">*</span></label
+  >
+
+  <div
+    class="dropdown__row"
+    [ngClass]="statusClass"
+    (click)="toggleDropdown()"
+    tabindex="0"
+  >
+    <i-tabler *ngIf="icon" [name]="icon" class="dropdown__icon"></i-tabler>
+    <div class="dropdown__value">
+      <span
+        *ngIf="!controlValue; else selectedValue"
+        class="dropdown__placeholder"
+      >
+        {{ placeholder }}</span
+      >
+      <ng-template #selectedValue>
+        <span> {{ parsedValue | dropdownLabel : optionLabel }}</span>
+      </ng-template>
+    </div>
+    <i-tabler
+      name="chevron-down"
+      class="dropdown__icon"
+      [@chevronRotate]="state"
+    ></i-tabler>
+  </div>
+
+  <div class="dropdown__options-container">
+    <div class="dropdown__options" *ngIf="state === 'opened'" @expandCollapse>
+      <div class="dropdown__options-scroll">
+        <div
+          class="dropdown__option"
+          [class.active]="isOptionSelected(option)"
+          (click)="selectOption(option)"
+          *ngFor="let option of options"
+          tabindex="0"
+        >
+          {{ option | dropdownLabel : optionLabel }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <ktbz-input-error
+    [@expandCollapse]="validationEnabled"
+    *ngIf="validationEnabled && formControl.errors"
+    [errors]="formControl.errors"
+    [keys]="errorKeys"
+  ></ktbz-input-error>
+</div>

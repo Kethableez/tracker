@@ -1,0 +1,48 @@
+.app-tracker {
+  width: 100vw;
+  max-width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.tracker-page {
+  padding-inline: 16px;
+  padding-top: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.notifications-container {
+  z-index: 999;
+  padding: 16px 16px 0 16px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-x: hidden;
+}
+
+@media screen and (min-width: 425px) {
+  .notifications-container {
+    right: 0;
+    width: calc(400px);
+    max-width: calc(400px);
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .notifications-container {
+    left: 0;
+    width: calc(100% - 32px);
+    max-width: calc(100% - 32px);
+
+    ktbz-notifiation {
+      flex-grow: 1;
+      width: 500px;
+    }
+  }
+}

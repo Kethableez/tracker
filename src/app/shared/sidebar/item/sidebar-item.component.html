@@ -1,0 +1,42 @@
+<div class="sidebar-item">
+  <ng-container *ngIf="events$ | async"></ng-container>
+  <div
+    class="sidebar-item__row"
+    [routerLink]="menuItem.route.links"
+    routerLinkActive="active"
+  >
+    <i-tabler [name]="menuItem.icon"></i-tabler>
+    <span class="sidebar-item__label text-primary text-medium">
+      {{ menuItem.route.label }}</span
+    >
+    <i-tabler
+      name="chevron-down"
+      class="sidebar-item__chevron"
+      *ngIf="menuItem.children?.length"
+      [@chevronRotate]="state"
+    ></i-tabler>
+  </div>
+  <div
+    class="sidebar-item__children"
+    *ngIf="menuItem.children?.length && state === 'opened'"
+    @expandCollapse
+  >
+    <!-- <div
+      class="sidebar-item__row--child"
+      [routerLink]="['guidelines', 'colors']"
+      routerLinkActive="active"
+    >
+      <span class="sidebar-item__label text-primary text-medium"> Colors</span>
+    </div> -->
+    <div
+      class="sidebar-item__row--child"
+      *ngFor="let child of menuItem.children"
+      [routerLink]="child.route.links"
+      routerLinkActive="active"
+    >
+      <span class="sidebar-item__label text-primary text-medium">
+        {{ child.route.label }}</span
+      >
+    </div>
+  </div>
+</div>

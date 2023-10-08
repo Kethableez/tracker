@@ -1,0 +1,49 @@
+.color-picker {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__icon {
+    color: var(--neutral-600);
+  }
+
+  &__badge {
+    flex-grow: 1;
+    height: 24px;
+    border-radius: 4px;
+  }
+
+  &__row {
+    &:focus-within,
+    &.focus {
+      border-color: var(--neutral-400);
+    }
+
+    &.invalid {
+      border-color: var(--error-100);
+    }
+
+    &.valid {
+      border-color: var(--success-100);
+    }
+
+    border: 1px solid var(--neutral-100);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+  }
+}
+
+.required-mark {
+  color: var(--error-100);
+}
+
+.btn {
+  padding-block: 0 !important;
+  border-radius: 4px;
+}

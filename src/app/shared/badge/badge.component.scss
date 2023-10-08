@@ -1,0 +1,98 @@
+:host-context {
+  &.badge--absolute {
+    &-top-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-30%) translateY(-30%);
+    }
+
+    &-top-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translateX(30%) translateY(-30%);
+    }
+
+    &-bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-30%) translateY(30%);
+    }
+
+    &-bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: translateX(30%) translateY(30%);
+    }
+
+    &-top-left--dot {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &-top-right--dot {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    &-bottom-left--dot {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    &-bottom-right--dot {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+.badge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: var(--space-999);
+
+  &--dot {
+    padding: 0;
+    height: var(--space-12);
+    width: var(--space-12);
+  }
+
+  &--border {
+    border: 2px solid var(--neutral-0);
+  }
+
+  &--info {
+    background-color: var(--info-100);
+    color: var(--neutral-0);
+  }
+
+  &--error {
+    color: var(--neutral-0);
+
+    background-color: var(--error-100);
+  }
+
+  &--success {
+    color: var(--neutral-0);
+
+    background-color: var(--success-100);
+  }
+
+  &--warning {
+    background-color: var(--warning-100);
+  }
+
+  &--normal {
+    background-color: var(--neutral-100);
+  }
+}

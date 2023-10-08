@@ -1,0 +1,18 @@
+<div class="color-picker__container">
+  <label class="text-primary text-bold" [for]="controlName">
+    {{ label }} <span class="required-mark" *ngIf="required">*</span></label
+  >
+  <div class="color-picker__row" [ngClass]="statusClass">
+    <i-tabler *ngIf="icon" [name]="icon" class="color-picker__icon"></i-tabler>
+    <div class="color-picker__badge" [style.background-color]="value"></div>
+    <button ktbzBtn variant="filled" size="small" (click)="getRandomColor()">
+      Losuj
+    </button>
+  </div>
+  <ktbz-input-error
+    [@expandCollapse]="validationEnabled"
+    *ngIf="validationEnabled && formControl.errors"
+    [errors]="formControl.errors"
+    [keys]="errorKeys"
+  ></ktbz-input-error>
+</div>

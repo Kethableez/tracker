@@ -1,0 +1,15 @@
+<div
+  ktbzBadgeContainer
+  class="avatar"
+  ktbz
+  [ngClass]="[avatarSize, withBorder, isRounded]"
+>
+  <ng-content></ng-content>
+  <ng-container [ngSwitch]="variant">
+    <img class="avatar__image" *ngSwitchCase="'image'" [src]="src" />
+    <div *ngSwitchCase="'text'" class="avatar__text">{{ text }}</div>
+    <div *ngSwitchCase="'default'" class="avatar__default">
+      <i-tabler name="user-circle" [ngClass]="iconClass"></i-tabler>
+    </div>
+  </ng-container>
+</div>

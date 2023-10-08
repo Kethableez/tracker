@@ -1,0 +1,55 @@
+<h2 class="text-subtitle">Create expense</h2>
+<form [formGroup]="expenseForm" class="form-group">
+  <ktbz-input
+    label="Nazwa"
+    icon="category"
+    formControlName="name"
+    placeholder="Nazwa będzie widoczna"
+  ></ktbz-input>
+
+  <ktbz-input
+    label="Kwota"
+    placeholder="0,00 zł"
+    icon="123"
+    type="numeric"
+    formControlName="amount"
+  ></ktbz-input>
+
+  <ktbz-dropdown
+    label="Konto"
+    icon="currency-dollar"
+    formControlName="accountId"
+    placeholder="Wybierz konto"
+    [options]="accounts"
+    optionLabel="name"
+    optionValue="id"
+  ></ktbz-dropdown>
+
+  <ktbz-radio-group label="Typ transakcji" formControlName="type">
+    <ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>
+    <hr class="separator" />
+    <ktbz-radio [value]="'OUTCOME'">Obciążenie</ktbz-radio>
+  </ktbz-radio-group>
+
+  <ktbz-dropdown
+    *ngIf="expenseForm.controls['type'].value"
+    label="Kategoria"
+    icon="currency-dollar"
+    formControlName="categoryId"
+    placeholder="Wybierz konto"
+    [options]="categories"
+    optionLabel="name"
+    optionValue="id"
+  ></ktbz-dropdown>
+
+  <ktbz-input
+    label="Data"
+    icon="calendar"
+    type="date"
+    formControlName="date"
+  ></ktbz-input>
+
+  <button ktbzBtn variant="solid" class="sticky" (click)="addExpense()">
+    Dodaj
+  </button>
+</form>

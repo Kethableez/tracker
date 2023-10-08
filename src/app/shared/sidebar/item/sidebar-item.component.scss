@@ -1,0 +1,47 @@
+.sidebar-item {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__chevron {
+    stroke: var(--neutral-900);
+  }
+
+  &__children {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    flex-grow: 1;
+  }
+
+  &__row,
+  &__row--child {
+    background-color: var(--neutral-0);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+
+    &:hover {
+      background-color: var(--neutral-50);
+    }
+
+    &.active {
+      background-color: var(--neutral-50);
+      color: var(--primary-300);
+    }
+  }
+
+  &__row--child {
+    padding-left: 40px;
+  }
+}

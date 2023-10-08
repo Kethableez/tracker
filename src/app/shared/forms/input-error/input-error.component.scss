@@ -1,0 +1,9 @@
+.input-error {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__message {
+    color: var(--error-100);
+  }
+}

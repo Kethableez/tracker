@@ -1,0 +1,59 @@
+.input {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__icon {
+    color: var(--neutral-600);
+  }
+
+  &__row {
+    &:focus-within,
+    &.focus {
+      border-color: var(--neutral-400);
+    }
+
+    &.invalid {
+      border-color: var(--error-100);
+    }
+
+    &.valid {
+      border-color: var(--success-100);
+    }
+
+    border: 1px solid var(--neutral-100);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+
+    input {
+      appearance: none;
+      border: none;
+      outline: none;
+      font: var(--text-primary);
+    }
+
+    &::placeholder {
+      color: var(--neutral-300);
+    }
+  }
+
+  &__calendar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    background-color: rgba($color: #000000, $alpha: 0.18);
+    z-index: 101;
+  }
+}

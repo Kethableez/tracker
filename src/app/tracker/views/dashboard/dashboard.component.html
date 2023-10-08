@@ -1,0 +1,12 @@
+<ktbz-dashboard-summary
+  [summaryData]="summary"
+  (click)="next()"
+></ktbz-dashboard-summary>
+<div class="list" *ngIf="history.length">
+  <label class="text-title text-bold">Historia</label>
+  <ktbz-history-item
+    *ngFor="let item of history"
+    [item]="item"
+    [currency]="summary.currency"
+  ></ktbz-history-item>
+</div>

@@ -1,0 +1,15 @@
+<div class="radio" (click)="radioGroup.selectValue(value)">
+  <div
+    class="radio__body"
+    [ngClass]="{
+      invalid: radioGroup.validationEnabled && radioGroup.formControl.invalid,
+      selected: radioGroup.isSelected(value)
+    }"
+  >
+    <div
+      class="radio__body--selected"
+      *ngIf="radioGroup.isSelected(value)"
+    ></div>
+  </div>
+  <label class="radio__label"> <ng-content></ng-content> </label>
+</div>

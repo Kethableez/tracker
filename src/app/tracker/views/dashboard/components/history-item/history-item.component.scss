@@ -1,0 +1,23 @@
+.history-item {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 0.5fr;
+  gap: 8px;
+}
+
+.badge {
+  font: var(--text-caption);
+  background-color: var(--neutral-100);
+  text-align: center;
+  border-radius: 4px;
+}
+
+.currency {
+  text-align: right;
+}
+
+.outcome {
+  color: var(--error-100);
+}
+.income {
+  color: var(--success-100);
+}

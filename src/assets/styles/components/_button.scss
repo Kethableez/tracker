@@ -1,0 +1,152 @@
+button {
+  background-color: unset;
+  outline: none;
+  border: none;
+}
+
+.action-btn {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  padding: 2px 4px;
+  font: 500 16px/150% var(--text-font);
+  color: var(--primary-300);
+  border-radius: var(--space-4);
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover {
+    background-color: var(--neutral-20);
+  }
+
+  &:active {
+    background-color: var(--neutral-50);
+  }
+
+  &.inverted {
+    background-color: var(--neutral-800);
+    color: var(--neutral-0);
+
+    &:hover {
+      background-color: var(--neutral-700);
+    }
+
+    &:active {
+      background-color: var(--neutral-600);
+    }
+  }
+}
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  cursor: pointer;
+  justify-content: center;
+
+  align-items: center;
+  font: 700 16px/150% var(--text-font);
+  border-radius: var(--space-8);
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &.small {
+    padding: 4px 16px;
+
+    &.icon {
+      padding: 4px;
+    }
+  }
+  &.medium {
+    padding: 8px 24px;
+    &.icon {
+      padding: 8px;
+    }
+  }
+  &.large {
+    padding: 12px 32px;
+
+    &.icon {
+      padding: 12px;
+    }
+  }
+
+  // Variants
+  &.solid {
+    background-color: var(--primary-300);
+    color: var(--neutral-0);
+
+    &:not(:disabled):hover {
+      background-color: var(--primary-400);
+    }
+
+    &:not(:disabled):active {
+      background-color: var(--primary-500);
+    }
+  }
+  &.outline {
+    border: 1px solid var(--primary-300);
+    background-color: unset;
+    color: var(--primary-300);
+
+    &:not(:disabled):hover {
+      border: 1px solid var(--primary-400);
+      background-color: unset;
+      color: var(--primary-400);
+    }
+
+    &:not(:disabled):active {
+      border: 1px solid var(--primary-500);
+      background-color: unset;
+      color: var(--primary-500);
+    }
+  }
+  &.filled {
+    background-color: rgba($color: #6880f6, $alpha: 0.16);
+    color: var(--primary-300);
+
+    &:not(:disabled):hover {
+      background-color: rgba($color: #6880f6, $alpha: 0.24);
+      color: var(--primary-400);
+    }
+
+    &:not(:disabled):active {
+      background-color: rgba($color: #6880f6, $alpha: 0.32);
+      color: var(--primary-500);
+    }
+  }
+  &.ghost {
+    background-color: unset;
+    color: var(--primary-300);
+
+    &:not(:disabled):hover {
+      background-color: unset;
+      color: var(--primary-400);
+    }
+
+    &:not(:disabled):active {
+      background-color: unset;
+      color: var(--primary-500);
+    }
+  }
+  &.neutral {
+    background-color: unset;
+    color: var(--neutral-900);
+
+    &:not(:disabled):hover {
+      background-color: unset;
+      color: var(--primary-300);
+    }
+
+    &:not(:disabled):active {
+      background-color: unset;
+      color: var(--primary-400);
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+}

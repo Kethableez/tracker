@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --text-font: "Inter", sans-serif;
+
+  --text-regular: 400;
+  --text-medium: 500;
+  --text-semi-bold: 600;
+  --text-bold: 700;
+
+  --text-heading-1: var(--text-medium) 80px/120% var(--text-font);
+  --text-heading-2: var(--text-medium) 64px/120% var(--text-font);
+  --text-heading-3: var(--text-medium) 48px/120% var(--text-font);
+  --text-heading-4: var(--text-medium) 40px/120% var(--text-font);
+  --text-heading-5: var(--text-medium) 32px/120% var(--text-font);
+  --text-heading-6: var(--text-medium) 28px/120% var(--text-font);
+
+  --text-title: var(--text-regular) 24px/150% var(--text-font);
+  --text-subtitle: var(--text-regular) 20px/150% var(--text-font);
+  --text-primary: var(--text-regular) 16px/150% var(--text-font);
+  --text-secondary: var(--text-regular) 14px/140% var(--text-font);
+  --text-caption: var(--text-regular) 12px/150% var(--text-font);
+}
+
+.text {
+  &--no-margin {
+    margin: 0;
+  }
+
+  &-bold {
+    font-weight: var(--text-bold) !important;
+  }
+
+  &-semi-bold {
+    font-weight: var(--text-semi-bold) !important;
+  }
+
+  &-medium {
+    font-weight: var(--text-medium) !important;
+  }
+
+  &-regular {
+    font-weight: var(--text-regular) !important;
+  }
+
+  &-h1 {
+    font: var(--text-heading-1);
+  }
+
+  &-h2 {
+    font: var(--text-heading-2);
+  }
+
+  &-h3 {
+    font: var(--text-heading-3);
+  }
+
+  &-h4 {
+    font: var(--text-heading-4);
+  }
+
+  &-h5 {
+    font: var(--text-heading-5);
+  }
+
+  &-h6 {
+    font: var(--text-heading-6);
+  }
+
+  &-title {
+    font: var(--text-title);
+  }
+
+  &-subtitle {
+    font: var(--text-subtitle);
+  }
+
+  &-primary {
+    font: var(--text-primary);
+  }
+
+  &-secondary {
+    font: var(--text-secondary);
+  }
+
+  &-caption {
+    font: var(--text-caption);
+  }
+}

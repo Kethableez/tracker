@@ -1,0 +1,10 @@
+<div class="page-title">
+  <label class="page-title__label text-subtitle text-bold" *ngIf="parent">
+    {{ parent }}</label
+  >
+  <h1 class="text-h3 text-bold text--no-margin" *ngIf="title">{{ title }}</h1>
+  <div class="page-title__space"></div>
+  <label class="page-title__label text-primary">
+    <ng-content></ng-content>
+  </label>
+</div>
