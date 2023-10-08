@@ -36,7 +36,55 @@ export class NotificationService {
     this.refs.push(ref);
   }
 
+  addErrorNotification(header?: string, message?: string) {
+    const notification: ServiceNotification = {
+      header,
+      message,
+      type: 'error',
+    };
+    this.addNotification(notification);
+  }
+
+  addSuccessNotification(header?: string, message?: string) {
+    const notification: ServiceNotification = {
+      header,
+      message,
+      type: 'success',
+    };
+    this.addNotification(notification);
+  }
+
+  addInfoNotification(header?: string, message?: string) {
+    const notification: ServiceNotification = {
+      header,
+      message,
+      type: 'info',
+    };
+    this.addNotification(notification);
+  }
+
+  addWarningNotification(header?: string, message?: string) {
+    const notification: ServiceNotification = {
+      header,
+      message,
+      type: 'warning',
+    };
+    this.addNotification(notification);
+  }
+
   removeSelf(ref: ElementRef) {
     this.refs.find((r) => r.instance.ref === ref)?.destroy();
+  }
+
+  removeByType(type: 'error' | 'info' | 'success' | 'warning') {
+    this.refs.forEach((ref) => {
+      if (ref.instance.type === type) {
+        ref.destroy();
+      }
+    });
+  }
+
+  removeAll() {
+    this.refs.forEach((ref) => ref.destroy());
   }
 }

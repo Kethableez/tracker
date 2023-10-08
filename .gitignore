@@ -6,6 +6,9 @@
 /out-tsc
 /bazel-out
 
+/api/pocketbase
+/api/pocketbase.exe
+
 # Node
 /node_modules
 npm-debug.log

@@ -70,11 +70,27 @@ export class AccountFormComponent implements OnInit {
   addAccount() {
     this.fs.markAsDirtyAndTouched(this.accountForm);
     if (this.accountForm.valid) {
+      this.notificationService.removeAll();
       const payload = this.accountForm.value;
-      this.accountService.addAccount(payload).subscribe((resp) => {
-        this.notificationService.addNotification(resp);
+      this.accountService.addAccount(payload).subscribe({
+        next: () =>
+          this.notificationService.addSuccessNotification(
+            'Utworzono nowe konto'
+          ),
+
+        error: ({ status, response }) => {
+          console.log('sr', status, response);
+          this.notificationService.addErrorNotification(
+            'Błąd',
+            'Nie można utworzyć konta'
+          );
+        },
+        complete: () => {
+          this.accountForm.reset();
+          this.accountForm.updateValueAndValidity();
+          this.cdr.markForCheck();
+        },
       });
-      this.accountForm.reset();
     }
   }
 
