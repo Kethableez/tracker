@@ -101,7 +101,6 @@ export class InputComponent<T>
   }
 
   patchDate(date: Date) {
-    console.log(date);
     this.isDatePickerVisible = false;
     this.writeValue(date as any);
     this.doUpdate();

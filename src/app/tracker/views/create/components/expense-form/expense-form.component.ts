@@ -81,11 +81,22 @@ export class ExpenseFormComponent implements OnInit {
   addExpense() {
     this.fs.markAsDirtyAndTouched(this.expenseForm);
     if (this.expenseForm.valid) {
+      this.notificationService.removeAll();
       const payload = this.expenseForm.value;
-      this.expenseService.addExpense(payload).subscribe((resp) => {
-        this.notificationService.addNotification(resp);
+      this.expenseService.addExpense(payload).subscribe({
+        next: () =>
+          this.notificationService.addSuccessNotification('Dodano wydatek'),
+        error: ({ status, response }) =>
+          this.notificationService.addErrorNotification(
+            'Błąd',
+            'Nie można dodać wydatku'
+          ),
+        complete: () => {
+          this.expenseForm.reset();
+          this.expenseForm.updateValueAndValidity();
+          this.cdr.markForCheck();
+        },
       });
-      this.expenseForm.reset();
     }
   }
 
@@ -96,8 +107,8 @@ export class ExpenseFormComponent implements OnInit {
         null,
         Validators.compose([Validators.required, Validators.min(0)])
       ),
-      accountId: new FormControl(null, Validators.required),
-      categoryId: new FormControl(null, Validators.required),
+      account: new FormControl(null, Validators.required),
+      category: new FormControl(null, Validators.required),
       type: new FormControl(null, Validators.required),
       date: new FormControl(null, Validators.required),
     });

@@ -1,0 +1,24 @@
+<div class="pagination" *ngIf="pagination">
+  <button
+    class="pagination__button"
+    [disabled]="pagination.page <= 1"
+    (click)="previousPage()"
+  >
+    <i-tabler name="chevron-left" class="pagination__icon"></i-tabler>
+  </button>
+
+  <span>
+    <span class="text-secondary"> {{ pagination.page }} </span>/<span
+      class="text-secondary text-semi-bold pagination__total-pages"
+    >
+      {{ pagination.totalPages || 1 }}
+    </span>
+  </span>
+  <button
+    class="pagination__button"
+    [disabled]="pagination.page >= pagination.totalPages"
+    (click)="nextPage()"
+  >
+    <i-tabler name="chevron-right" class="pagination__icon"></i-tabler>
+  </button>
+</div>

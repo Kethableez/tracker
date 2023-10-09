@@ -1,38 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { v4 } from 'uuid';
 import { Expense } from '../models/expense.model';
 import { ServiceNotification } from '../models/notification.model';
 import { StorageService } from './storage.service';
+import { AbstractApiService } from './api.service';
+import { RecordModel } from 'pocketbase';
+import { ROOT_USER } from '../root.user';
+import { Filter } from '../models/filter.model';
 
 @Injectable({ providedIn: 'root' })
-export class ExpenseService extends StorageService<Expense> {
-  readonly storageKey = 'EXPENSE';
+export class ExpenseService extends AbstractApiService<Expense> {
+  readonly COLLECTION_KEY = 'expenses';
 
-  constructor() {
-    super();
+  protected mapper(model: RecordModel): Expense {
+    const { id, name, amount, account, type, category, date } = model;
+    return { id, name, amount, account, type, category, date } as Expense;
   }
 
-  addExpense(payload: Omit<Expense, 'id'>): Observable<ServiceNotification> {
-    const id = v4();
-
-    const expenses = this.getExpenses();
-
-    this.addOne([...expenses, { id, ...payload }]);
-    return of({ header: 'Dodano wydatek', type: 'success' });
+  addExpense(payload: Omit<Expense, 'id'>) {
+    return this.create({
+      ...payload,
+      user: ROOT_USER.id,
+    });
   }
 
-  getExpenses() {
-    return this.getAll();
+  addRebalance(amount: number, account: string) {
+    return from(
+      this.collection.create({
+        name: 'ACCOUNT_REBALANCE',
+        user: ROOT_USER.id,
+        type: 'REBALANCE',
+        account,
+        amount,
+      })
+    );
   }
 
-  // notExisting(categoryToAdd: Omit<Expense, 'id'>, categories: Expense[]) {
-  //   if (!categories.length) return true;
-  //   else {
-  //     return !categories.find(
-  //       (cat) =>
-  //         cat.name === categoryToAdd.name && cat.type === categoryToAdd.type
-  //     );
-  //   }
-  // }
+  getList(page = 1, filters?: Filter, sorting?: string) {
+    return this.list(page, filters, sorting);
+  }
+
+  getAll() {
+    return this.all();
+  }
 }

@@ -48,7 +48,6 @@ export class SummaryComponent implements OnInit {
 
   get rangeWidth() {
     const { income, outcome } = this.summaryData;
-    console.log(income, outcome);
     return Math.round((income * 100) / (income + outcome));
   }
 }

@@ -1,0 +1,106 @@
+<ktbz-list
+  [items]="expenses"
+  [itemTemplate]="listTemplate"
+  [searchForm]="searchForm"
+  [searchTemplate]="searchTemplate"
+  [pagination]="pagination"
+  [sortableColumns]="sortableColumns"
+  (pagingSortingChange)="fetchData($event)"
+  (onClearFilters)="clearFilters()"
+>
+</ktbz-list>
+
+<ng-template #searchTemplate>
+  <form [formGroup]="searchForm" class="form-group">
+    <ktbz-input
+      label="Nazwa kategorii"
+      [required]="false"
+      formControlName="name"
+      [skipValidation]="true"
+    ></ktbz-input>
+
+    <ktbz-dropdown
+      label="Typ"
+      [required]="false"
+      [skipValidation]="true"
+      formControlName="type"
+      [options]="types"
+      optionLabel="label"
+      optionValue="value"
+    ></ktbz-dropdown>
+
+    <div class="control-group">
+      <label class="text-secondary text-semi-bold">Data</label>
+      <div class="control-group__controls">
+        <ktbz-input
+          formControlName="dateFrom"
+          type="date"
+          [skipValidation]="true"
+        ></ktbz-input>
+        -
+        <ktbz-input
+          formControlName="dateTo"
+          type="date"
+          [skipValidation]="true"
+        ></ktbz-input>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="text-secondary text-semi-bold">Kwota</label>
+      <div class="control-group__controls">
+        <ktbz-input
+          formControlName="amountFrom"
+          type="numeric"
+          [skipValidation]="true"
+        ></ktbz-input>
+        -
+        <ktbz-input
+          formControlName="amountTo"
+          type="numeric"
+          [skipValidation]="true"
+        ></ktbz-input>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #listTemplate let-expense>
+  <div class="list-row">
+    <div class="list-cell">
+      <label class="text-caption">Nazwa</label>
+      <span class="text-secondary text-semi-bold"> {{ expense.name }}</span>
+    </div>
+
+    <div class="list-cell">
+      <label class="text-caption">Kwota</label>
+      <span class="text-secondary text-semi-bold">
+        {{ expense.amount | currency : "PLN" }}</span
+      >
+    </div>
+
+    <div class="list-cell">
+      <label class="text-caption">Data</label>
+      <span class="text-secondary text-semi-bold">
+        {{ expense.date | date : "dd.MM.YYYY" }}</span
+      >
+    </div>
+    <div class="list-cell">
+      <label class="text-caption">Konto</label>
+      <span class="list-badge" [style.background-color]="expense.accountColor">
+        {{ expense.accountName }}
+      </span>
+    </div>
+    <div class="list-cell">
+      <label class="text-caption">Kategoria</label>
+      <span class="list-badge" [style.background-color]="expense.categoryColor">
+        {{ expense.categoryName }}
+      </span>
+    </div>
+    <div class="list-cell">
+      <label class="text-caption">Typ</label>
+      <span class="list-badge" [style.background-color]="'#e6e6e6'">
+        {{ expense.type === "OUTCOME" ? "Obciążenie" : "Uznanie" }}
+      </span>
+    </div>
+  </div>
+</ng-template>

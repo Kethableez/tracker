@@ -17,66 +17,66 @@ import { TRACKER_ROUTES } from './tracker/tracker.routing';
 
 const routes: Routes = [
   ...TRACKER_ROUTES,
-  {
-    path: AppRoutes.HOME.path,
-    component: HomeComponent,
-  },
-  {
-    path: AppRoutes.GUIDELINES.path,
-    component: GuidelinesComponent,
-    children: [
-      {
-        path: AppRoutes.COLORS.path,
-        component: ColorsComponent,
-      },
-      {
-        path: AppRoutes.TYPOGRAPHY.path,
-        component: ColorsComponent,
-      },
-      {
-        path: AppRoutes.SPACING.path,
-        component: ColorsComponent,
-      },
-      {
-        path: AppRoutes.BREAKPOINTS.path,
-        component: ColorsComponent,
-      },
-    ],
-  },
-  {
-    path: AppRoutes.COMPONENTS.path,
-    component: ComponentsComponent,
-    children: [
-      {
-        path: AppRoutes.ACTION_BUTTON.path,
-        component: ActionButtonsComponent,
-      },
-      {
-        path: AppRoutes.AVATAR.path,
-        component: AvatarsComponent,
-      },
-      {
-        path: AppRoutes.BADGE.path,
-        component: BadgesComponent,
-      },
-      {
-        path: AppRoutes.BUTTON.path,
-        component: ButtonsComponent,
-      },
-      {
-        path: AppRoutes.BREADCRUMB.path,
-        component: BreadcrumbsComponent,
-      },
-      {
-        path: AppRoutes.CALENDAR.path,
-        component: CalendarsComponent,
-      },
-      {
-        path: AppRoutes.NOTIFICATION.path,
-        component: NotificationsComponent,
-      },
-    ],
-  },
+  // {
+  //   path: AppRoutes.HOME.path,
+  //   component: HomeComponent,
+  // },
+  // {
+  //   path: AppRoutes.GUIDELINES.path,
+  //   component: GuidelinesComponent,
+  //   children: [
+  //     {
+  //       path: AppRoutes.COLORS.path,
+  //       component: ColorsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.TYPOGRAPHY.path,
+  //       component: ColorsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.SPACING.path,
+  //       component: ColorsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.BREAKPOINTS.path,
+  //       component: ColorsComponent,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: AppRoutes.COMPONENTS.path,
+  //   component: ComponentsComponent,
+  //   children: [
+  //     {
+  //       path: AppRoutes.ACTION_BUTTON.path,
+  //       component: ActionButtonsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.AVATAR.path,
+  //       component: AvatarsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.BADGE.path,
+  //       component: BadgesComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.BUTTON.path,
+  //       component: ButtonsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.BREADCRUMB.path,
+  //       component: BreadcrumbsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.CALENDAR.path,
+  //       component: CalendarsComponent,
+  //     },
+  //     {
+  //       path: AppRoutes.NOTIFICATION.path,
+  //       component: NotificationsComponent,
+  //     },
+  //   ],
+  // },
 ];
 
 @NgModule({

@@ -58,7 +58,6 @@ export class BreadcrumbsComponent implements OnInit {
     const item = this.paths.find(
       (menuItem) => menuItem.path === currentPath
     ) as MenuItem;
-    console.log(currentPath, item);
     let composedPath = [item];
     if (item?.parent) {
       composedPath = [item.parent, ...composedPath];

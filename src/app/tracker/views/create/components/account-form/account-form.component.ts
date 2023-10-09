@@ -19,6 +19,8 @@ import { InputComponent } from 'src/app/shared/forms/input/input.component';
 import { NotificationService } from 'src/app/shared/notification/notification.service';
 import { AccountService } from 'src/app/tracker/core/services/account.service';
 import { FormService } from 'src/app/tracker/core/services/form.service';
+import { map, switchMap } from 'rxjs';
+import { ExpenseService } from 'src/app/tracker/core/services/expense.service';
 
 @Component({
   selector: 'ktbz-account-form',
@@ -44,6 +46,7 @@ export class AccountFormComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private accountService: AccountService,
     private notificationService: NotificationService,
+    private expenseService: ExpenseService,
     private fs: FormService
   ) {}
 
@@ -71,26 +74,38 @@ export class AccountFormComponent implements OnInit {
     this.fs.markAsDirtyAndTouched(this.accountForm);
     if (this.accountForm.valid) {
       this.notificationService.removeAll();
+      const { balance } = this.accountForm.value;
       const payload = this.accountForm.value;
-      this.accountService.addAccount(payload).subscribe({
-        next: () =>
-          this.notificationService.addSuccessNotification(
-            'Utworzono nowe konto'
-          ),
+      delete payload.balance;
 
-        error: ({ status, response }) => {
-          console.log('sr', status, response);
-          this.notificationService.addErrorNotification(
-            'Błąd',
-            'Nie można utworzyć konta'
-          );
-        },
-        complete: () => {
-          this.accountForm.reset();
-          this.accountForm.updateValueAndValidity();
-          this.cdr.markForCheck();
-        },
-      });
+      this.accountService
+        .addAccount(payload)
+        .pipe(
+          switchMap((account) =>
+            this.expenseService
+              .addRebalance(balance, account.id)
+              .pipe(map(() => account))
+          )
+        )
+
+        .subscribe({
+          next: () =>
+            this.notificationService.addSuccessNotification(
+              'Utworzono nowe konto'
+            ),
+
+          error: ({ status, response }) => {
+            this.notificationService.addErrorNotification(
+              'Błąd',
+              'Nie można utworzyć konta'
+            );
+          },
+          complete: () => {
+            this.accountForm.reset();
+            this.accountForm.updateValueAndValidity();
+            this.cdr.markForCheck();
+          },
+        });
     }
   }
 

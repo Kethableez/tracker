@@ -19,6 +19,10 @@ import {
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
 import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.component';
 import { CollapseComponent } from 'src/app/shared/collapse/collapse.component';
+import { AccountBalanceService } from 'src/app/tracker/core/services/account-balance.service';
+import { map, switchMap } from 'rxjs';
+import { AccountBalance } from 'src/app/tracker/core/models/account-balance.model';
+import { Filter } from 'src/app/tracker/core/models/filter.model';
 
 @Component({
   selector: 'ktbz-accounts-list',
@@ -65,9 +69,16 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
+    private balanceService: AccountBalanceService,
     private cdr: ChangeDetectorRef,
     private builder: FormBuilder
   ) {}
+
+  getAccountBalance(id: string) {
+    return this.balanceService
+      .getOne(id)
+      .pipe(map((balance) => balance.balance));
+  }
 
   accounts: Account[] = [];
   pagination!: {
@@ -93,13 +104,33 @@ export class AccountsComponent implements OnInit {
 
     filters = this.getFilterQuery();
 
-    this.accountService.getList(page, filters, sorting).subscribe((records) => {
-      const { items, page, perPage, totalItems, totalPages } = records;
-      this.pagination = { page, perPage, totalItems, totalPages };
-      this.accounts = items;
-      console.log(this.accounts);
-      this.cdr.markForCheck();
-    });
+    this.accountService
+      .getList(page, filters, sorting)
+      .pipe(
+        switchMap((records) => {
+          return this.balanceService
+            .getByIds(records.items.map((item) => item.id))
+            .pipe(
+              map((balances) => {
+                return {
+                  ...records,
+                  items: records.items.map((item) => ({
+                    ...item,
+                    balance: balances.find(
+                      (balance: AccountBalance) => balance.id === item.id
+                    )?.balance,
+                  })),
+                };
+              })
+            );
+        })
+      )
+      .subscribe((records) => {
+        const { items, page, perPage, totalItems, totalPages } = records;
+        this.pagination = { page, perPage, totalItems, totalPages };
+        this.accounts = items;
+        this.cdr.markForCheck();
+      });
   }
 
   initSearchForm() {
@@ -119,24 +150,20 @@ export class AccountsComponent implements OnInit {
   getFilterQuery() {
     const { name, currency, balanceFrom, balanceTo } = this.searchForm.value;
 
-    let query = [];
+    const filter: Filter = {
+      withUserId: true,
+      filters: [
+        {
+          property: 'name',
+          operator: '~',
+          value: name,
+        },
+        { property: 'currency', operator: '=', value: currency },
+        { property: 'balance', operator: '>=', value: balanceFrom },
+        { property: 'balance', operator: '<=', value: balanceTo },
+      ],
+    };
 
-    if (name) {
-      query.push(`name~"${name}"`);
-    }
-
-    if (currency) {
-      query.push(`currency="${currency}"`);
-    }
-
-    if (balanceFrom) {
-      query.push(`balance>="${balanceFrom}"`);
-    }
-
-    if (balanceTo) {
-      query.push(`balance<="${balanceTo}"`);
-    }
-
-    return query.length ? query.join('&&') : undefined;
+    return filter;
   }
 }

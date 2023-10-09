@@ -32,7 +32,6 @@ export class CreateComponent {
   ];
 
   selectCreateForm(tab: string) {
-    console.log(tab);
     this.activeForm = tab;
   }
 }

@@ -1,4 +1,3 @@
-<h2 class="text-subtitle text-medium">Twoje konta</h2>
 <ktbz-list
   [items]="accounts"
   [itemTemplate]="listTemplate"
@@ -48,22 +47,22 @@
 </ng-template>
 
 <ng-template #listTemplate let-account>
-  <div class="account-row">
-    <div class="account-cell">
+  <div class="list-row">
+    <div class="list-cell">
       <label class="text-caption">Nazwa</label>
       <span class="text-secondary text-semi-bold">
         {{ account.name }}
       </span>
     </div>
 
-    <div class="account-cell">
+    <div class="list-cell">
       <label class="text-caption">Waluta</label>
-      <span class="badge" [style.background-color]="account.color">
+      <span class="list-badge" [style.background-color]="account.color">
         {{ account.currency }}
       </span>
     </div>
 
-    <div class="account-cell">
+    <div class="list-cell">
       <label class="text-caption">Saldo</label>
       <span class="text-secondary text-semi-bold">
         {{ account.balance | currency : account.currency }}

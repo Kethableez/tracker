@@ -2,8 +2,8 @@ export interface Expense {
   id: string;
   name: string;
   amount: number;
-  accountId: string;
-  categoryId: string;
-  type: 'INCOME' | 'OUTCOME';
+  account: string;
+  category: string;
+  type: 'INCOME' | 'OUTCOME' | 'REBALANCE';
   date: Date;
 }

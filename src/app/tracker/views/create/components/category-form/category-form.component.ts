@@ -69,7 +69,6 @@ export class CategoryFormComponent implements OnInit {
           ),
 
         error: ({ status, response }) => {
-          console.log('sr', status, response);
           this.notificationService.addErrorNotification(
             'Błąd',
             'Nie można utworzyć kategorii'

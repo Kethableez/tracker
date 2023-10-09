@@ -1,0 +1,19 @@
+<div class="sorting">
+  <label class="text-secondary text-semi-bold">Sortuj po:</label>
+  <div class="sorting__buttons">
+    <button
+      class="sorting__button"
+      [class.active]="isActive(item.value)"
+      *ngFor="let item of sortableColumn"
+      (click)="sort(item.value)"
+    >
+      {{ item.label }}
+
+      <i-tabler
+        *ngIf="isActive(item.value)"
+        class="sorting__icon"
+        [name]="isAsc ? 'sort-ascending' : 'sort-descending'"
+      ></i-tabler>
+    </button>
+  </div>
+</div>

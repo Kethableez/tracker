@@ -3,12 +3,13 @@ import { RecordModel } from 'pocketbase';
 import { Account } from '../models/account.model';
 import { ROOT_USER } from '../root.user';
 import { AbstractApiService } from './api.service';
+import { Filter } from '../models/filter.model';
 
 @Injectable({ providedIn: 'root' })
-export class AccountService extends AbstractApiService {
+export class AccountService extends AbstractApiService<Account> {
   readonly COLLECTION_KEY = 'accounts';
 
-  protected mapper<Account>(model: RecordModel): Account {
+  protected mapper(model: RecordModel): Account {
     const { balance, color, currency, id, name } = model;
     return { balance, color, currency, id, name } as Account;
   }
@@ -20,11 +21,11 @@ export class AccountService extends AbstractApiService {
     });
   }
 
-  getList(page = 1, filters?: string, sorting?: string) {
-    return this.list<Account>(page, filters, sorting);
+  getList(page = 1, filters?: Filter, sorting?: string) {
+    return this.list(page, filters, sorting);
   }
 
   getAll() {
-    return this.all<Account>();
+    return this.all();
   }
 }

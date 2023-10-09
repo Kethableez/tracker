@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 
 export const TRACKER_ROUTES: Route[] = [
   {
-    path: 'tracker',
+    path: '',
     loadComponent: () =>
       import('./tracker.component').then((tracker) => tracker.TrackerComponent),
     children: [

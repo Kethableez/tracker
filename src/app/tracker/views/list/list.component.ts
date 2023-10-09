@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SegmentedTabsComponent } from 'src/app/shared/segmented-tabs/segmented-tabs.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ExpensesComponent } from './components/expenses/expenses.component';
 
 @Component({
   selector: 'ktbz-list',
@@ -15,25 +16,22 @@ import { CategoriesComponent } from './components/categories/categories.componen
     SegmentedTabsComponent,
     AccountsComponent,
     CategoriesComponent,
-    // ExpenseFormComponent,
-    // CategoryFormComponent,
-    // AccountFormComponent,
+    ExpensesComponent,
   ],
 })
 export class CreateComponent {
-  activeList = 'accounts';
+  activeList = 'expenses';
 
   readonly TABS = [
     {
-      label: 'Expenses',
+      label: 'Wydatki',
       value: 'expenses',
     },
-    { label: 'Categories', value: 'categories' },
-    { label: 'Accounts', value: 'accounts' },
+    { label: 'Kategorie', value: 'categories' },
+    { label: 'Konta', value: 'accounts' },
   ];
 
   selectCreateForm(tab: string) {
-    console.log(tab);
     this.activeList = tab;
   }
 }

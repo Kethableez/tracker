@@ -1,21 +1,17 @@
 <div class="mobile-menu">
-  <a
-    class="menu-item"
-    routerLink="/tracker/dashboard"
-    routerLinkActive="active"
-  >
+  <a class="menu-item" [routerLink]="['dashboard']" routerLinkActive="active">
     <i-tabler name="home"></i-tabler>
     <span class="menu-item__indicator"></span>
   </a>
 
-  <a class="menu-item" routerLink="/tracker/list" routerLinkActive="active">
+  <a class="menu-item" [routerLink]="['list']" routerLinkActive="active">
     <i-tabler name="layout-list"></i-tabler>
     <span class="menu-item__indicator"></span>
   </a>
 
   <div
     class="menu-item--main"
-    routerLink="/tracker/create"
+    [routerLink]="['create']"
     routerLinkActive="active"
   >
     <!-- <button ktbzBtn variant="filled" [onlyIcon]="true">
@@ -23,11 +19,11 @@
     <i-tabler name="square-rounded-plus"></i-tabler>
   </div>
 
-  <a class="menu-item" routerLink="/tracker/charts" routerLinkActive="active">
+  <a class="menu-item" [routerLink]="['charts']" routerLinkActive="active">
     <i-tabler name="chart-pie"></i-tabler>
     <span class="menu-item__indicator"></span>
   </a>
-  <a class="menu-item" routerLink="/tracker/settings" routerLinkActive="active">
+  <a class="menu-item" [routerLink]="['settings']" routerLinkActive="active">
     <i-tabler name="settings"></i-tabler>
     <span class="menu-item__indicator"></span>
   </a>

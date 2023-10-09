@@ -9,15 +9,18 @@ import {
 } from '@angular/core';
 import { NotificationComponent } from './notification.component';
 import { ServiceNotification } from 'src/app/tracker/core/models/notification.model';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   refs: ComponentRef<NotificationComponent>[] = [];
 
-  constructor(
-    private appRef: ApplicationRef,
-    private injector: EnvironmentInjector
-  ) {}
+  constructor(private appRef: ApplicationRef, private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => this.removeAll());
+  }
 
   addNotification(notification: ServiceNotification) {
     const host = document.getElementById('notifications') as HTMLElement;

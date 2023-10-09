@@ -68,7 +68,6 @@ export abstract class AbstractInputBase<T>
     if (this.disabled) return 'disabled';
     if (this.readonly) return 'readonly';
     if (this.validationEnabled && !this.skipValidation) {
-      console.log(':D');
       if (this.formControl.valid) return 'valid';
       if (this.formControl.invalid) return 'invalid';
       if (this.formControl.pending) return 'pending';

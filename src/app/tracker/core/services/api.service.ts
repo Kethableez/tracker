@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import PocketBase, { ListResult, RecordModel } from 'pocketbase';
+import PocketBase, { ListResult, RecordModel, RecordService } from 'pocketbase';
 import { Observable, catchError, from, map, throwError } from 'rxjs';
+import { ROOT_USER } from '../root.user';
+import { Filter } from '../models/filter.model';
 
 type ApiPayload = { [key: string]: any };
 
@@ -14,13 +16,17 @@ export class HttpError {
 }
 
 @Injectable({ providedIn: 'root' })
-export abstract class AbstractApiService {
+export abstract class AbstractApiService<T> {
   abstract readonly COLLECTION_KEY: string;
 
   protected readonly api = new PocketBase('http://127.0.0.1:8090');
-  protected abstract mapper<T>(model: RecordModel): T;
+  protected abstract mapper(model: RecordModel): T;
 
-  protected create<T>(payload: T): Observable<any> {
+  protected get collection(): RecordService {
+    return this.api.collection(this.COLLECTION_KEY);
+  }
+
+  protected create(payload: any): Observable<T> {
     return from(
       this.api.collection(this.COLLECTION_KEY).create(payload as ApiPayload)
     ).pipe(
@@ -31,19 +37,15 @@ export abstract class AbstractApiService {
     );
   }
 
-  protected list<T>(
+  protected list(
     page: number = 1,
-    filters?: string,
+    filters?: Filter,
     sorting?: string
   ): Observable<ListResult<T>> {
     const options = {
-      filter: filters,
+      filter: this.parseFilters(filters),
       sort: sorting,
     };
-
-    if (!options.filter) {
-      delete options.filter;
-    }
 
     if (!options.sort) {
       delete options.sort;
@@ -53,25 +55,52 @@ export abstract class AbstractApiService {
       this.api.collection(this.COLLECTION_KEY).getList(page, 5, options)
     ).pipe(
       map((listResult: ListResult<RecordModel>) =>
-        this.recordMapper<T>(listResult)
+        this.recordMapper(listResult)
       )
     );
   }
 
-  protected all<T>() {
-    return from(this.api.collection(this.COLLECTION_KEY).getFullList()).pipe(
-      map((records: RecordModel[]) => this.listMapper<T>(records))
+  protected one(id: string) {
+    return from(this.api.collection(this.COLLECTION_KEY).getOne(id)).pipe(
+      map((model: RecordModel) => this.mapper(model))
     );
   }
 
-  private recordMapper<T>(records: ListResult<RecordModel>): ListResult<T> {
+  protected all() {
+    return from(
+      this.api
+        .collection(this.COLLECTION_KEY)
+        .getFullList({ filter: `user="${ROOT_USER.id}"` })
+    ).pipe(map((records: RecordModel[]) => this.listMapper(records)));
+  }
+
+  private recordMapper(records: ListResult<RecordModel>): ListResult<T> {
     return {
       ...records,
-      items: records.items.map((item: any) => this.mapper<T>(item)),
+      items: records.items.map((item: any) => this.mapper(item)),
     };
   }
 
-  private listMapper<T>(list: RecordModel[]): T[] {
+  private listMapper(list: RecordModel[]): T[] {
     return list.map((record) => this.mapper(record));
+  }
+
+  private parseFilters(filter?: Filter) {
+    if (!filter) return undefined;
+    if (filter.withUserId) {
+      return [
+        ...filter.filters,
+        { property: 'user', operator: '=', value: ROOT_USER.id },
+      ]
+        .filter((f) => !!f.value)
+        .map((f) => `${f.property}${f.operator}"${f.value}"`)
+        .join('&&');
+    } else {
+      const query = filter.filters
+        .filter((f) => !!f.value)
+        .map((f) => `${f.property}${f.operator}"${f.value}"`)
+        .join('&&');
+      return query !== '' ? query : undefined;
+    }
   }
 }

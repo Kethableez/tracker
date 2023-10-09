@@ -1,0 +1,33 @@
+.sorting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 4px;
+    color: var(--primary-300);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+
+    &.active {
+      background-color: rgba($color: #6880f6, $alpha: 0.16);
+      color: var(--primary-300);
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-300);
+  }
+}

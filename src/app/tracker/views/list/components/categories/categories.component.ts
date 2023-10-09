@@ -21,6 +21,7 @@ import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.compon
 import { CollapseComponent } from 'src/app/shared/collapse/collapse.component';
 import { Category } from 'src/app/tracker/core/models/category.model';
 import { CategoryService } from 'src/app/tracker/core/services/category.service';
+import { Filter } from 'src/app/tracker/core/models/filter.model';
 
 @Component({
   selector: 'ktbz-categories-list',
@@ -101,12 +102,17 @@ export class CategoriesComponent implements OnInit {
   getFilterQuery() {
     const { name } = this.searchForm.value;
 
-    let query = [];
+    const filter: Filter = {
+      withUserId: true,
+      filters: [
+        {
+          property: 'name',
+          operator: '~',
+          value: name,
+        },
+      ],
+    };
 
-    if (name) {
-      query.push(`name~"${name}"`);
-    }
-
-    return query.length ? query.join('&&') : undefined;
+    return filter;
   }
 }
