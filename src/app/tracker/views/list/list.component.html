@@ -1,0 +1,11 @@
+<ktbz-segmented-tabs
+  [tabs]="TABS"
+  [activeTab]="activeList"
+  (onSelectTab)="selectCreateForm($event)"
+></ktbz-segmented-tabs>
+<ng-container [ngSwitch]="activeList">
+  <!-- <ktbz-expense-form *ngSwitchCase="'expense'"></ktbz-expense-form> -->
+  <!-- <ktbz-category-form *ngSwitchCase="'category'"></ktbz-category-form> -->
+  <ktbz-categories-list *ngSwitchCase="'categories'"></ktbz-categories-list>
+  <ktbz-accounts-list *ngSwitchCase="'accounts'"></ktbz-accounts-list>
+</ng-container>

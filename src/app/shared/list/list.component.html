@@ -1,0 +1,69 @@
+<div class="list">
+  <ng-container *ngIf="searchForm && searchTemplate">
+    <ktbz-collapse header="Wyszukiwarka">
+      <ng-template [ngTemplateOutlet]="searchTemplate"></ng-template>
+      <div class="search-button">
+        <button ktbzBtn size="small" variant="outline" (click)="clearFilters()">
+          Wyczyść
+        </button>
+
+        <button ktbzBtn size="small" (click)="applySearch()">Wyszukaj</button>
+      </div>
+    </ktbz-collapse>
+  </ng-container>
+
+  <div class="list__sorting" *ngIf="sortableColumns">
+    <label class="text-secondary text-semi-bold">Sortuj</label>
+    <div class="list__sorting--buttons">
+      <button
+        class="sorting-badge"
+        [class.active]="sortItem.value === activeSorting"
+        *ngFor="let sortItem of sortableColumns"
+        (click)="selectSorting(sortItem.value)"
+      >
+        {{ sortItem.label }}
+        <i-tabler
+          *ngIf="sortItem.value === activeSorting"
+          class="sorting-icon"
+          [name]="
+            sortingDirection === 'ASC' ? 'sort-ascending' : 'sort-descending'
+          "
+        ></i-tabler>
+      </button>
+    </div>
+  </div>
+
+  <div class="list__items">
+    <div class="list-item" *ngFor="let item of items">
+      <ng-template
+        [ngTemplateOutlet]="itemTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      ></ng-template>
+    </div>
+  </div>
+
+  <div class="list__pagination" *ngIf="pagination">
+    <button
+      class="pagination-button"
+      [disabled]="pagination.page === 1"
+      (click)="previous()"
+    >
+      <i-tabler name="chevron-left" class="pagination--icon"></i-tabler>
+    </button>
+
+    <span>
+      <span class="text-secondary"> {{ pagination.page }} </span>/<span
+        class="text-secondary"
+      >
+        {{ pagination.totalPages }}
+      </span>
+    </span>
+    <button
+      class="pagination-button"
+      [disabled]="pagination.page === pagination.totalPages"
+      (click)="next()"
+    >
+      <i-tabler name="chevron-right" class="pagination--icon"></i-tabler>
+    </button>
+  </div>
+</div>

@@ -57,8 +57,8 @@ export class ExpenseFormComponent implements OnInit {
     private fs: FormService
   ) {}
 
-  accounts: Account[] = this.accountService.getAll();
-  categoriesBase: Category[] = this.categoryService.getAll();
+  accounts: Account[] = [];
+  categoriesBase: Category[] = [];
 
   get categories() {
     return this.categoriesBase.filter(
@@ -69,6 +69,13 @@ export class ExpenseFormComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.cdr.markForCheck();
+
+    this.accountService
+      .getAll()
+      .subscribe((accounts) => (this.accounts = accounts));
+    this.categoryService
+      .getAll()
+      .subscribe((categories) => (this.categoriesBase = categories));
   }
 
   addExpense() {

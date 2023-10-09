@@ -1,46 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { v4 } from 'uuid';
+import { RecordModel } from 'pocketbase';
+import { ROOT_USER } from '../root.user';
+import { AbstractApiService } from './api.service';
 import { Category } from '../models/category.model';
-import { ServiceNotification } from '../models/notification.model';
-import { StorageService } from './storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class CategoryService extends StorageService<Category> {
-  readonly storageKey = 'CATEGORY';
+export class CategoryService extends AbstractApiService {
+  readonly COLLECTION_KEY = 'categories';
 
-  constructor() {
-    super();
+  protected mapper<Category>(model: RecordModel): Category {
+    const { limit, color, type, id, name } = model;
+    return { name, limit, color, id, type } as Category;
   }
 
-  addAccount(payload: Omit<Category, 'id'>): Observable<ServiceNotification> {
-    const id = v4();
-
-    const categories = this.getCategories();
-
-    if (!this.notExisting(payload, categories)) {
-      return of({
-        header: 'Kategoria już istnieje',
-        message: 'Kategoria o podanych parametrach już istnieje',
-        type: 'error',
-      });
-    }
-
-    this.addOne([...categories, { id, ...payload }]);
-    return of({ header: 'Dodano kategorię', type: 'success' });
+  addCategory(payload: Omit<Category, 'id'>) {
+    return this.create({
+      ...payload,
+      user: ROOT_USER.id,
+    });
   }
 
-  getCategories() {
-    return this.getAll();
+  getList(page = 1, filters?: string, sorting?: string) {
+    return this.list<Category>(page, filters, sorting);
   }
 
-  notExisting(categoryToAdd: Omit<Category, 'id'>, categories: Category[]) {
-    if (!categories.length) return true;
-    else {
-      return !categories.find(
-        (cat) =>
-          cat.name === categoryToAdd.name && cat.type === categoryToAdd.type
-      );
-    }
+  getAll() {
+    return this.all<Category>();
   }
 }

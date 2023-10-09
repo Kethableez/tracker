@@ -1,0 +1,21 @@
+.collapse {
+  box-shadow: 0 1px 8px rgba($color: #000000, $alpha: 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+
+  &__header {
+    background-color: var(--neutral-50);
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    label {
+      flex-grow: 1;
+    }
+  }
+
+  &__body {
+    padding: 8px;
+  }
+}

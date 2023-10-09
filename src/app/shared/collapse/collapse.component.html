@@ -1,0 +1,11 @@
+<div class="collapse">
+  <div class="collapse__header" (click)="toggle()">
+    <label>
+      {{ header }}
+    </label>
+    <i-tabler name="chevron-down" [@chevronRotate]="state"></i-tabler>
+  </div>
+  <div class="collapse__body" *ngIf="state === 'opened'" @expandCollapse>
+    <ng-content></ng-content>
+  </div>
+</div>

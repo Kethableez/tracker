@@ -14,6 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 export abstract class AbstractInputBase<T>
   implements ControlValueAccessor, OnInit
 {
+  @Input() skipValidation = false;
   @Input() label!: string;
   @Input() required = true;
   @Input() errorKeys: string[] = [];
@@ -66,7 +67,7 @@ export abstract class AbstractInputBase<T>
   get statusClass() {
     if (this.disabled) return 'disabled';
     if (this.readonly) return 'readonly';
-    if (this.validationEnabled) {
+    if (this.validationEnabled && !this.skipValidation) {
       console.log(':D');
       if (this.formControl.valid) return 'valid';
       if (this.formControl.invalid) return 'invalid';

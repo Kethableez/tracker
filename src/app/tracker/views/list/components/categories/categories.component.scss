@@ -1,0 +1,24 @@
+.category-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-row {
+  padding: 8px;
+  border-radius: 8px;
+  gap: 8px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  box-shadow: 0 1px 8px rgba($color: #000000, $alpha: 0.12);
+}
+
+.badge {
+  font: var(--text-caption);
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.self-end {
+  align-self: self-end;
+}

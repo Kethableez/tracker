@@ -1,0 +1,34 @@
+<h2 class="text-subtitle text-medium">Twoje kategorie</h2>
+<ktbz-list
+  [items]="categories"
+  [itemTemplate]="listTemplate"
+  [pagination]="pagination"
+  [sortableColumns]="sortableColumns"
+  (pagingSortingChange)="fetchData($event)"
+  (onClearFilters)="clearFilters()"
+></ktbz-list>
+
+<ng-template #listTemplate let-category>
+  <div class="category-row">
+    <div class="category-cell">
+      <label class="text-caption">Nazwa</label>
+      <span class="text-secondary text-semi-bold">
+        {{ category.name }}
+      </span>
+    </div>
+
+    <div class="category-cell">
+      <label class="text-caption">Typ</label>
+      <span class="badge" [style.background-color]="category.color">
+        {{ category.type === "OUTCOME" ? "Obciążenie" : "Uznanie" }}
+      </span>
+    </div>
+
+    <div class="category-cell">
+      <label class="text-caption">Limit</label>
+      <span class="text-secondary text-semi-bold">
+        {{ category.limit || "-" }}
+      </span>
+    </div>
+  </div>
+</ng-template>

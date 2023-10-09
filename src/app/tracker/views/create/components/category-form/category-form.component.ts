@@ -60,11 +60,27 @@ export class CategoryFormComponent implements OnInit {
   addCategory() {
     this.fs.markAsDirtyAndTouched(this.categoryForm);
     if (this.categoryForm.valid) {
+      this.notificationService.removeAll();
       const payload = this.categoryForm.value;
-      this.categoryService.addAccount(payload).subscribe((resp) => {
-        this.notificationService.addNotification(resp);
+      this.categoryService.addCategory(payload).subscribe({
+        next: () =>
+          this.notificationService.addSuccessNotification(
+            'Utworzono nową kategorię'
+          ),
+
+        error: ({ status, response }) => {
+          console.log('sr', status, response);
+          this.notificationService.addErrorNotification(
+            'Błąd',
+            'Nie można utworzyć kategorii'
+          );
+        },
+        complete: () => {
+          this.categoryForm.reset();
+          this.categoryForm.updateValueAndValidity();
+          this.cdr.markForCheck();
+        },
       });
-      this.categoryForm.reset();
     }
   }
 

@@ -14,6 +14,13 @@ export const TRACKER_ROUTES: Route[] = [
           ),
       },
       {
+        path: 'list',
+        loadComponent: () =>
+          import('./views/list/list.component').then(
+            (list) => list.CreateComponent
+          ),
+      },
+      {
         path: 'create',
         loadComponent: () =>
           import('./views/create/create.component').then(

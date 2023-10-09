@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import PocketBase, { RecordModel } from 'pocketbase';
+import PocketBase, { ListResult, RecordModel } from 'pocketbase';
 import { Observable, catchError, from, map, throwError } from 'rxjs';
 
 type ApiPayload = { [key: string]: any };
@@ -29,5 +29,49 @@ export abstract class AbstractApiService {
       }),
       map((model: RecordModel) => this.mapper(model))
     );
+  }
+
+  protected list<T>(
+    page: number = 1,
+    filters?: string,
+    sorting?: string
+  ): Observable<ListResult<T>> {
+    const options = {
+      filter: filters,
+      sort: sorting,
+    };
+
+    if (!options.filter) {
+      delete options.filter;
+    }
+
+    if (!options.sort) {
+      delete options.sort;
+    }
+
+    return from(
+      this.api.collection(this.COLLECTION_KEY).getList(page, 5, options)
+    ).pipe(
+      map((listResult: ListResult<RecordModel>) =>
+        this.recordMapper<T>(listResult)
+      )
+    );
+  }
+
+  protected all<T>() {
+    return from(this.api.collection(this.COLLECTION_KEY).getFullList()).pipe(
+      map((records: RecordModel[]) => this.listMapper<T>(records))
+    );
+  }
+
+  private recordMapper<T>(records: ListResult<RecordModel>): ListResult<T> {
+    return {
+      ...records,
+      items: records.items.map((item: any) => this.mapper<T>(item)),
+    };
+  }
+
+  private listMapper<T>(list: RecordModel[]): T[] {
+    return list.map((record) => this.mapper(record));
   }
 }

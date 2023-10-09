@@ -1,0 +1,73 @@
+<h2 class="text-subtitle text-medium">Twoje konta</h2>
+<ktbz-list
+  [items]="accounts"
+  [itemTemplate]="listTemplate"
+  [searchForm]="searchForm"
+  [searchTemplate]="searchTemplate"
+  [pagination]="pagination"
+  [sortableColumns]="sortableColumns"
+  (pagingSortingChange)="fetchData($event)"
+  (onClearFilters)="clearFilters()"
+></ktbz-list>
+
+<ng-template #searchTemplate>
+  <form class="form-group" [formGroup]="searchForm">
+    <ktbz-input
+      label="Nazwa konta"
+      [required]="false"
+      formControlName="name"
+      [skipValidation]="true"
+    ></ktbz-input>
+    <ktbz-dropdown
+      label="Waluta"
+      [required]="false"
+      [skipValidation]="true"
+      formControlName="currency"
+      [options]="currencies"
+      optionLabel="label"
+      optionValue="value"
+    ></ktbz-dropdown>
+
+    <div class="control-group">
+      <label class="text-secondary text-semi-bold">Saldo</label>
+      <div class="control-group__controls">
+        <ktbz-input
+          formControlName="balanceFrom"
+          type="numeric"
+          [skipValidation]="true"
+        ></ktbz-input>
+        -
+        <ktbz-input
+          formControlName="balanceTo"
+          type="numeric"
+          [skipValidation]="true"
+        ></ktbz-input>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #listTemplate let-account>
+  <div class="account-row">
+    <div class="account-cell">
+      <label class="text-caption">Nazwa</label>
+      <span class="text-secondary text-semi-bold">
+        {{ account.name }}
+      </span>
+    </div>
+
+    <div class="account-cell">
+      <label class="text-caption">Waluta</label>
+      <span class="badge" [style.background-color]="account.color">
+        {{ account.currency }}
+      </span>
+    </div>
+
+    <div class="account-cell">
+      <label class="text-caption">Saldo</label>
+      <span class="text-secondary text-semi-bold">
+        {{ account.balance | currency : account.currency }}
+      </span>
+    </div>
+  </div>
+</ng-template>
