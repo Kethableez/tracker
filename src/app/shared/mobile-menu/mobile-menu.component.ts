@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonDirective } from '../directives/button.directive';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { environmentBase } from 'src/environments/environment.base';
 
 @Component({
   selector: 'ktbz-mobile-menu',
@@ -13,6 +14,8 @@ import { TablerIconsModule } from 'angular-tabler-icons';
   imports: [CommonModule, RouterModule, ButtonDirective, TablerIconsModule],
 })
 export class MobileMenuComponent implements OnInit {
+  menuItems = environmentBase.menuItems;
+
   constructor() {}
 
   ngOnInit() {}

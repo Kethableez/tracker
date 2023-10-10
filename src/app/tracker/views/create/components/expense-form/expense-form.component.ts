@@ -18,13 +18,16 @@ import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.compon
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
 import { RadioGroupComponent } from 'src/app/shared/forms/radio-group/radio-group.component';
 import { RadioComponent } from 'src/app/shared/forms/radio-group/radio/radio.component';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { NotificationService } from 'src/app/shared/notification/notification.service';
+import { Currency } from 'src/app/tracker/core/enums/currencies.enum';
 import { Account } from 'src/app/tracker/core/models/account.model';
 import { Category } from 'src/app/tracker/core/models/category.model';
 import { AccountService } from 'src/app/tracker/core/services/account.service';
 import { CategoryService } from 'src/app/tracker/core/services/category.service';
 import { ExpenseService } from 'src/app/tracker/core/services/expense.service';
 import { FormService } from 'src/app/tracker/core/services/form.service';
+import { environmentBase } from 'src/environments/environment.base';
 
 @Component({
   selector: 'ktbz-expense-form',
@@ -41,6 +44,7 @@ import { FormService } from 'src/app/tracker/core/services/form.service';
     ColorPickerComponent,
     RadioGroupComponent,
     RadioComponent,
+    NotificationComponent,
   ],
   providers: [FormService],
 })
@@ -59,6 +63,9 @@ export class ExpenseFormComponent implements OnInit {
 
   accounts: Account[] = [];
   categoriesBase: Category[] = [];
+  defaultCurrency = Currency.PLN;
+
+  currencies = environmentBase.currencies;
 
   get categories() {
     return this.categoriesBase.filter(
@@ -100,6 +107,15 @@ export class ExpenseFormComponent implements OnInit {
     }
   }
 
+  get hasSelectedAccountDifferentCurrency() {
+    const { account } = this.expenseForm.value;
+    if (!account) return false;
+    return (
+      this.accounts.find((acc) => acc.id === account)?.currency !==
+      this.defaultCurrency
+    );
+  }
+
   private initForm() {
     this.expenseForm = this.builder.group({
       name: new FormControl(null, Validators.required),
@@ -111,6 +127,8 @@ export class ExpenseFormComponent implements OnInit {
       category: new FormControl(null, Validators.required),
       type: new FormControl(null, Validators.required),
       date: new FormControl(null, Validators.required),
+      changeCurrency: new FormControl(null),
+      currency: new FormControl(null),
     });
   }
 }

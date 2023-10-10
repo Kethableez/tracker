@@ -6,9 +6,9 @@ import {
   trigger,
 } from '@angular/animations';
 
-export const slideInOut = trigger('slideInOut', [
+export const slideInOutX = trigger('slideInOutX', [
   transition(':enter', [
-    style({ opacity: 0, transform: 'translateX(20px)' }),
+    style({ opacity: 0, transform: 'translateX(10px)' }),
     animate(
       '200ms ease-in-out',
       style({ opacity: 1, transform: 'translateX(0)' })
@@ -17,46 +17,23 @@ export const slideInOut = trigger('slideInOut', [
   transition(':leave', [
     animate(
       '200ms ease-in-out',
-      style({ opacity: 0, transform: 'translateX(-20px)' })
+      style({ opacity: 0, transform: 'translateX(-10px)' })
     ),
   ]),
 ]);
 
-export const slideInOutStagger = trigger('slideInOutStagger', [
-  transition('* => *', [
-    query(
-      ':enter',
-      [
-        style({ opacity: 0, transform: 'translateX(20px)' }),
-        animate(
-          '200ms ease-in-out',
-          style({ opacity: 1, transform: 'translateX(0)' })
-        ),
-      ],
-      { optional: true }
-    ),
-    query(
-      ':leave',
-      [
-        animate(
-          '200ms ease-in-out',
-          style({ opacity: 0, transform: 'translateX(-20px)' })
-        ),
-      ],
-      { optional: true }
+export const slideInOutY = trigger('slideInOutY', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(20px)' }),
+    animate(
+      '200ms ease-in-out',
+      style({ opacity: 1, transform: 'translateY(0)' })
     ),
   ]),
-  // transition(':enter', [
-  //   style({ opacity: 0, transform: 'translateX(20px)' }),
-  //   animate(
-  //     '200ms ease-in-out',
-  //     style({ opacity: 1, transform: 'translateX(0)' })
-  //   ),
-  // ]),
-  // transition(':leave', [
-  //   animate(
-  //     '200ms ease-in-out',
-  //     style({ opacity: 0, transform: 'translateX(-20px)' })
-  //   ),
-  // ]),
+  transition(':leave', [
+    animate(
+      '200ms ease-in-out',
+      style({ opacity: 0, transform: 'translateY(-20px)' })
+    ),
+  ]),
 ]);

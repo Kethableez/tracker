@@ -3,7 +3,7 @@
   [activeTab]="activeList"
   (onSelectTab)="selectCreateForm($event)"
 ></ktbz-segmented-tabs>
-<hr class="page-hr" />
+<hr class="list-hr" />
 <ng-container [ngSwitch]="activeList">
   <ktbz-expenses-list *ngSwitchCase="'expenses'"></ktbz-expenses-list>
   <ktbz-categories-list *ngSwitchCase="'categories'"></ktbz-categories-list>

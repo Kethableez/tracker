@@ -44,7 +44,9 @@ export class SummaryComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.summaryData);
+  }
 
   get rangeWidth() {
     const { income, outcome } = this.summaryData;

@@ -19,12 +19,14 @@ import { ButtonDirective } from '../directives/button.directive';
   imports: [CommonModule, TablerIconsModule, ButtonDirective],
 })
 export class CalendarComponent implements OnInit {
-  @Input() anchorDate = new Date();
+  @Input() givenDate: Date | null = null;
   @Input() range = false;
   @Input() pastDaySelectable = true;
   @Output() onSelectedDate = new EventEmitter<Date>();
   @Output() onSelectedDateRange = new EventEmitter<Date[]>();
+  @Output() onDismiss = new EventEmitter<void>();
 
+  anchorDate = new Date();
   today = new Date();
   mode: 'days' | 'years' = 'days';
 
@@ -51,6 +53,10 @@ export class CalendarComponent implements OnInit {
     'November',
     'December',
   ];
+
+  dismiss() {
+    this.onDismiss.emit();
+  }
 
   get daysInSelectedMonth() {
     const nextMonth = this.anchorMonth === 11 ? 0 : this.anchorMonth + 1;
@@ -106,6 +112,12 @@ export class CalendarComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    console.log(this.anchorDate, this.givenDate);
+    if (!!this.givenDate) {
+      this.anchorDate = this.givenDate;
+      this.selectedDate = this.givenDate;
+    }
+
     this.anchorMonth = this.anchorDate.getMonth();
     this.anchorYear = this.anchorDate.getFullYear();
     this.anchorDay = this.anchorDate.getDate();
@@ -199,7 +211,11 @@ export class CalendarComponent implements OnInit {
 
   private selectDate(day: number) {
     this.selectedDate = new Date(this.anchorYear, this.anchorMonth, day);
-    this.onSelectedDate.emit(this.selectedDate);
+    this.onSelectedDate.emit(this.offsetDate(this.selectedDate));
+  }
+
+  private offsetDate(date: Date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
   }
 
   private selectDateRange(day: number) {
@@ -212,7 +228,10 @@ export class CalendarComponent implements OnInit {
       this.selectedDateTo = null;
     }
     if ((this.selectedDateFrom, this.selectedDateTo)) {
-      const dateRange = [this.selectedDateFrom, this.selectedDateTo];
+      const dateRange = [
+        this.offsetDate(this.selectedDateFrom),
+        this.offsetDate(this.selectedDateTo),
+      ];
       dateRange.sort((from, to) => from.getTime() - to.getTime());
 
       this.onSelectedDateRange.emit(dateRange);

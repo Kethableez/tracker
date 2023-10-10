@@ -105,26 +105,7 @@ export class AccountsComponent implements OnInit {
     filters = this.getFilterQuery();
 
     this.accountService
-      .getList(page, filters, sorting)
-      .pipe(
-        switchMap((records) => {
-          return this.balanceService
-            .getByIds(records.items.map((item) => item.id))
-            .pipe(
-              map((balances) => {
-                return {
-                  ...records,
-                  items: records.items.map((item) => ({
-                    ...item,
-                    balance: balances.find(
-                      (balance: AccountBalance) => balance.id === item.id
-                    )?.balance,
-                  })),
-                };
-              })
-            );
-        })
-      )
+      .getAccountsWithBalance(page, filters, sorting)
       .subscribe((records) => {
         const { items, page, perPage, totalItems, totalPages } = records;
         this.pagination = { page, perPage, totalItems, totalPages };

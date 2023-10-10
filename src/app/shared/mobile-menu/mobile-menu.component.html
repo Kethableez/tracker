@@ -1,30 +1,12 @@
 <div class="mobile-menu">
-  <a class="menu-item" [routerLink]="['dashboard']" routerLinkActive="active">
-    <i-tabler name="home"></i-tabler>
-    <span class="menu-item__indicator"></span>
-  </a>
-
-  <a class="menu-item" [routerLink]="['list']" routerLinkActive="active">
-    <i-tabler name="layout-list"></i-tabler>
-    <span class="menu-item__indicator"></span>
-  </a>
-
-  <div
-    class="menu-item--main"
-    [routerLink]="['create']"
+  <a
+    *ngFor="let item of menuItems"
+    [class.menu-item]="!item.isMain"
+    [class.menu-item--main]="item.isMain"
+    [routerLink]="[item.link]"
     routerLinkActive="active"
   >
-    <!-- <button ktbzBtn variant="filled" [onlyIcon]="true">
-    </button> -->
-    <i-tabler name="square-rounded-plus"></i-tabler>
-  </div>
-
-  <a class="menu-item" [routerLink]="['charts']" routerLinkActive="active">
-    <i-tabler name="chart-pie"></i-tabler>
-    <span class="menu-item__indicator"></span>
-  </a>
-  <a class="menu-item" [routerLink]="['settings']" routerLinkActive="active">
-    <i-tabler name="settings"></i-tabler>
-    <span class="menu-item__indicator"></span>
+    <i-tabler [name]="item.icon"></i-tabler>
+    <span *ngIf="!item.isMain" class="menu-item__indicator"></span>
   </a>
 </div>

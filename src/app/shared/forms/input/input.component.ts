@@ -17,6 +17,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { InputErrorComponent } from '../input-error/input-error.component';
 import { expandCollapse } from '../../animations/expand-collapse.animation';
 import { CalendarComponent } from '../../calendar/calendar.component';
+import { slideInOutY } from '../../animations/slide-in-out.animation';
 
 @Component({
   selector: 'ktbz-input',
@@ -41,7 +42,7 @@ import { CalendarComponent } from '../../calendar/calendar.component';
       multi: true,
     },
   ],
-  animations: [expandCollapse],
+  animations: [expandCollapse, slideInOutY],
 })
 export class InputComponent<T>
   extends AbstractInput<T | null>
@@ -98,6 +99,10 @@ export class InputComponent<T>
     if (this.type === 'date') {
       this.isDatePickerVisible = true;
     }
+  }
+
+  closeDatePicker() {
+    this.isDatePickerVisible = false;
   }
 
   patchDate(date: Date) {

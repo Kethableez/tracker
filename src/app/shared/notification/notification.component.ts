@@ -11,7 +11,7 @@ import {
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { ButtonDirective } from '../directives/button.directive';
 import { NotificationService } from './notification.service';
-import { slideInOut } from '../animations/slide-in-out.animation';
+import { slideInOutX } from '../animations/slide-in-out.animation';
 
 @Component({
   selector: 'ktbz-notification',
@@ -20,8 +20,8 @@ import { slideInOut } from '../animations/slide-in-out.animation';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TablerIconsModule, ButtonDirective],
-  animations: [slideInOut],
-  host: { '[@slideInOut]': 'in' },
+  animations: [slideInOutX],
+  host: { '[@slideInOutX]': 'in' },
 })
 export class NotificationComponent implements OnInit {
   @Input() header?: string;

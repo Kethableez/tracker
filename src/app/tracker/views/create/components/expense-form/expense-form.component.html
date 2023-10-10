@@ -1,4 +1,3 @@
-<h2 class="text-subtitle">Create expense</h2>
 <form [formGroup]="expenseForm" class="form-group">
   <ktbz-input
     label="Nazwa"
@@ -24,6 +23,55 @@
     optionLabel="name"
     optionValue="id"
   ></ktbz-dropdown>
+
+  <ktbz-notification
+    *ngIf="hasSelectedAccountDifferentCurrency"
+    [type]="'warning'"
+    [closable]="false"
+    [withAction]="false"
+    [header]="'Uwaga'"
+    [message]="
+      'Wybrane konto ma inną walutę niż domyślnie wybrana (' +
+      defaultCurrency +
+      ').'
+    "
+  ></ktbz-notification>
+
+  <ktbz-radio-group
+    *ngIf="hasSelectedAccountDifferentCurrency"
+    label="Czy chcesz zmienić walutę dla tej transakcji?"
+    formControlName="changeCurrency"
+  >
+    <ktbz-radio [value]="true">Tak, zmieniam</ktbz-radio>
+    <hr class="separator" />
+    <ktbz-radio [value]="false">Nie, nie zmieniam</ktbz-radio>
+  </ktbz-radio-group>
+
+  <ktbz-dropdown
+    *ngIf="
+      hasSelectedAccountDifferentCurrency &&
+      expenseForm.controls['changeCurrency'].value
+    "
+    label="Waluta"
+    icon="currency-dollar"
+    formControlName="currency"
+    placeholder="Wybierz walutę"
+    [options]="currencies"
+    optionLabel="label"
+    optionValue="value"
+  ></ktbz-dropdown>
+
+  <ktbz-notification
+    *ngIf="
+      hasSelectedAccountDifferentCurrency &&
+      expenseForm.controls['changeCurrency'].value === false
+    "
+    [type]="'error'"
+    [closable]="false"
+    [withAction]="false"
+    [header]="'Uwaga'"
+    [message]="'Transakcja nie będzie wliczana w całkowite saldo'"
+  ></ktbz-notification>
 
   <ktbz-radio-group label="Typ transakcji" formControlName="type">
     <ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>

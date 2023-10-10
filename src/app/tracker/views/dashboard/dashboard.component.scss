@@ -1,8 +1,3 @@
-.list {
-  padding-block: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  overflow-y: scroll;
+.list-row {
+  grid-template-columns: 1fr 0.5fr 0.5fr;
 }

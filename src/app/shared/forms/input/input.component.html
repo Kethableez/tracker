@@ -55,5 +55,10 @@
   class="input__calendar-container"
   *ngIf="type === 'date' && isDatePickerVisible"
 >
-  <ktbz-calendar (onSelectedDate)="patchDate($event)"></ktbz-calendar>
+  <ktbz-calendar
+    @slideInOutY
+    [givenDate]="dateValue"
+    (onDismiss)="closeDatePicker()"
+    (onSelectedDate)="patchDate($event)"
+  ></ktbz-calendar>
 </div>

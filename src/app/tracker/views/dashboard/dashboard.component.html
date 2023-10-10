@@ -1,12 +1,27 @@
 <ktbz-dashboard-summary
+  *ngIf="summary"
   [summaryData]="summary"
   (click)="next()"
 ></ktbz-dashboard-summary>
-<div class="list" *ngIf="history.length">
-  <label class="text-title text-bold">Historia</label>
-  <ktbz-history-item
-    *ngFor="let item of history"
-    [item]="item"
-    [currency]="summary.currency"
-  ></ktbz-history-item>
-</div>
+<hr class="list-hr" />
+<ktbz-list *ngIf="history" [items]="history" [itemTemplate]="itemTemplate">
+</ktbz-list>
+<ng-template #itemTemplate let-history>
+  <div class="list-row">
+    <div class="list-cell">
+      <label class="text-secondary text-medium">
+        {{ history.name }}
+      </label>
+    </div>
+
+    <div class="list-cell">
+      <span class="list-badge" [style.background-color]="history.categoryColor">
+        {{ history.categoryName }}</span
+      >
+    </div>
+
+    <div class="list-cell">
+      {{ history.amount | currency : summary?.currency }}
+    </div>
+  </div>
+</ng-template>

@@ -6,12 +6,13 @@
   ></i-tabler>
   <div class="notification__content">
     <span class="text-black text-secondary text-bold">{{ header }}</span>
-    <span class="text-black text-secondary">{{ message }}</span>
+    <span class="text-black text-secondary" [innerHTML]="message"></span>
   </div>
   <button ktbzBtn size="small" variant="ghost" *ngIf="withAction">
     <span class="text-regular">Action</span>
   </button>
   <button
+    *ngIf="closable"
     ktbzBtn
     size="small"
     variant="normal"
