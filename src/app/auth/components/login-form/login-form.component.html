@@ -1,0 +1,10 @@
+<h2 class="text-subtitle text-semi-bold">Login to your account</h2>
+<form [formGroup]="loginForm" class="form-group">
+  <ktbz-input label="Nazwa użytkownika" formControlName="username"></ktbz-input>
+  <ktbz-input label="Hasło" type="password" formControlName="password"></ktbz-input>
+  <div class="form-group__buttons--vertical">
+    <a ktbzBtn variant="ghost" routerLink="/auth/register" >Zarejestruj się</a>
+    <button ktbzBtn variant="solid" (click)="login()">Zaloguj się </button>
+  </div>
+</form>
+<ng-container *ngIf="isLoginCompleted$ | async"></ng-container>

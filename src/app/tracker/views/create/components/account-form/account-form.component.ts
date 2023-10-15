@@ -78,34 +78,15 @@ export class AccountFormComponent implements OnInit {
       const payload = this.accountForm.value;
       delete payload.balance;
 
-      this.accountService
-        .addAccount(payload)
-        .pipe(
-          switchMap((account) =>
-            this.expenseService
-              .addRebalance(balance, account.id)
-              .pipe(map(() => account))
-          )
-        )
-
-        .subscribe({
-          next: () =>
-            this.notificationService.addSuccessNotification(
-              'Utworzono nowe konto'
-            ),
-
-          error: ({ status, response }) => {
-            this.notificationService.addErrorNotification(
-              'Błąd',
-              'Nie można utworzyć konta'
-            );
-          },
-          complete: () => {
-            this.accountForm.reset();
-            this.accountForm.updateValueAndValidity();
-            this.cdr.markForCheck();
-          },
-        });
+      this.accountService.create(payload).subscribe({
+        next: (v) => console.log(v),
+        error: (err) => console.log(err),
+        complete: () => {
+          this.accountForm.reset();
+          this.accountForm.updateValueAndValidity();
+          this.cdr.markForCheck();
+        },
+      });
     }
   }
 

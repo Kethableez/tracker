@@ -55,6 +55,7 @@ const menuItems = [
 ];
 
 export const environmentBase = {
+  apiUrl: 'http://localhost:3000',
   currencies,
   menuItems,
 };

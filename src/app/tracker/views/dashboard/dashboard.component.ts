@@ -138,29 +138,29 @@ export class DashboardComponent implements OnInit {
   activeIndex = 0;
 
   constructor(
-    private expenseService: ExpenseService,
-    private accountService: AccountService,
+    // private expenseService: ExpenseService,
+    // private accountService: AccountService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    forkJoin({
-      accounts: this.accountService.getAccountsWithBalanceAsList(),
-      mappedExpenses: this.expenseService.getAllForCurrentMonth(),
-    })
-      .pipe(
-        map(({ accounts, mappedExpenses }) => {
-          return accounts.map((account) => ({
-            ...account,
-            history: mappedExpenses[account.id],
-          }));
-        })
-      )
-      .subscribe((accounts) => {
-        this.newData = accounts;
-        this.cdr.detectChanges();
-        console.log(this.newData);
-      });
+    // forkJoin({
+    //   accounts: this.accountService.getAccountsWithBalanceAsList(),
+    //   mappedExpenses: this.expenseService.getAllForCurrentMonth(),
+    // })
+    //   .pipe(
+    //     map(({ accounts, mappedExpenses }) => {
+    //       return accounts.map((account) => ({
+    //         ...account,
+    //         history: mappedExpenses[account.id],
+    //       }));
+    //     })
+    //   )
+    //   .subscribe((accounts) => {
+    //     this.newData = accounts;
+    //     this.cdr.detectChanges();
+    //     console.log(this.newData);
+    //   });
   }
 
   get summary() {

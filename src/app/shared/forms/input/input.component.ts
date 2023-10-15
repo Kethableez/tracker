@@ -68,6 +68,15 @@ export class InputComponent<T>
     super(injector, cdr, elRef);
   }
 
+  get inputType() {
+    if (this.type === 'password' && !this.isPasswordVisible) return 'password';
+    else return 'text';
+  }
+
+  get passwordIcon() {
+    return this.isPasswordVisible ? 'eye' : 'eye-off';
+  }
+
   override doOnInit(): void {}
 
   override doOnFocusFn(): void {
@@ -109,6 +118,10 @@ export class InputComponent<T>
     this.isDatePickerVisible = false;
     this.writeValue(date as any);
     this.doUpdate();
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   get dateValue() {

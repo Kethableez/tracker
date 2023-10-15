@@ -31,3 +31,9 @@ hr.separator {
   border: unset;
   border-bottom: 1px solid var(--neutral-50);
 }
+
+.tracker-page {
+  padding: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+}

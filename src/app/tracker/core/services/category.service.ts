@@ -4,28 +4,15 @@ import { ROOT_USER } from '../root.user';
 import { AbstractApiService } from './api.service';
 import { Category } from '../models/category.model';
 import { Filter } from '../models/filter.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
-export class CategoryService extends AbstractApiService<Category> {
-  readonly COLLECTION_KEY = 'categories';
+export class CategoryService {
+  constructor(private http: HttpClient) {}
 
-  protected mapper(model: RecordModel): Category {
-    const { limit, color, type, id, name } = model;
-    return { name, limit, color, id, type } as Category;
+  create(payload: any) {
+    return this.http.post('http://localhost:3000/category', payload);
   }
 
-  addCategory(payload: Omit<Category, 'id'>) {
-    return this.create({
-      ...payload,
-      user: ROOT_USER.id,
-    });
-  }
-
-  getList(page = 1, filters?: Filter, sorting?: string) {
-    return this.list(page, filters, sorting);
-  }
-
-  getAll() {
-    return this.all();
-  }
+  getAll() {}
 }

@@ -77,12 +77,12 @@ export class ExpenseFormComponent implements OnInit {
     this.initForm();
     this.cdr.markForCheck();
 
-    this.accountService
-      .getAll()
-      .subscribe((accounts) => (this.accounts = accounts));
-    this.categoryService
-      .getAll()
-      .subscribe((categories) => (this.categoriesBase = categories));
+    // this.accountService
+    //   .getAll()
+    //   .subscribe((accounts) => (this.accounts = accounts));
+    // this.categoryService
+    //   .getAll()
+    //   .subscribe((categories) => (this.categoriesBase = categories));
   }
 
   addExpense() {

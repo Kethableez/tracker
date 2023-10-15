@@ -1,0 +1,16 @@
+.app-auth {
+  width: 100vw;
+  max-width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: url('/assets/imgs/auth-bg.png') no-repeat  center;
+  object-fit: contain;
+}
+
+.tracker-page {
+   display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

@@ -8,6 +8,32 @@
     bottom: 0;
     margin-top: 32px;
   }
+
+  &__buttons {
+    &--vertical {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+
+      .btn, a {
+        align-self: stretch;
+      }
+    }
+
+    &--horizontal {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      align-items: center;
+
+      .btn {
+        flex-grow: 1;
+      }
+    }
+  }
 }
 
 .control-group {
@@ -21,6 +47,8 @@
     gap: 4px;
     align-items: center;
   }
+
+
 }
 
 input {
