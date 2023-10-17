@@ -16,11 +16,11 @@
       border-color: var(--neutral-400);
     }
 
-    &.invalid {
+    &:not(.focus).invalid {
       border-color: var(--error-100);
     }
 
-    &.valid {
+    &:not(.focus).valid {
       border-color: var(--success-100);
     }
 

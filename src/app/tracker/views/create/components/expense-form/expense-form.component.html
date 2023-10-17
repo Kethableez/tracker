@@ -1,103 +1,79 @@
 <form [formGroup]="expenseForm" class="form-group">
-  <ktbz-input
-    label="Nazwa"
-    icon="category"
-    formControlName="name"
-    placeholder="Nazwa będzie widoczna"
-  ></ktbz-input>
+	<ktbz-input label="Nazwa" icon="category" formControlName="name" placeholder="Nazwa będzie widoczna"></ktbz-input>
 
-  <ktbz-input
-    label="Kwota"
-    placeholder="0,00 zł"
-    icon="123"
-    type="numeric"
-    formControlName="amount"
-  ></ktbz-input>
+	<ktbz-input label="Kwota" placeholder="0,00 zł" icon="123" type="numeric" formControlName="amount"></ktbz-input>
 
-  <ktbz-dropdown
-    label="Konto"
-    icon="currency-dollar"
-    formControlName="account"
-    placeholder="Wybierz konto"
-    [options]="accounts"
-    optionLabel="name"
-    optionValue="id"
-  ></ktbz-dropdown>
+	<ktbz-dropdown
+		*ngIf="accounts$ | async as accounts"
+		label="Konto"
+		icon="currency-dollar"
+		formControlName="accountId"
+		placeholder="Wybierz konto"
+		[options]="accounts"
+		optionLabel="name"
+		optionValue="id"
+	></ktbz-dropdown>
 
-  <ktbz-notification
-    *ngIf="hasSelectedAccountDifferentCurrency"
-    [type]="'warning'"
-    [closable]="false"
-    [withAction]="false"
-    [header]="'Uwaga'"
-    [message]="
-      'Wybrane konto ma inną walutę niż domyślnie wybrana (' +
-      defaultCurrency +
-      ').'
-    "
-  ></ktbz-notification>
+	<!--	<ktbz-notification-->
+	<!--		*ngIf="hasSelectedAccountDifferentCurrency"-->
+	<!--		[type]="'warning'"-->
+	<!--		[closable]="false"-->
+	<!--		[withAction]="false"-->
+	<!--		[header]="'Uwaga'"-->
+	<!--		[message]="'Wybrane konto ma inną walutę niż domyślnie wybrana (' + defaultCurrency + ').'"-->
+	<!--	></ktbz-notification>-->
 
-  <ktbz-radio-group
-    *ngIf="hasSelectedAccountDifferentCurrency"
-    label="Czy chcesz zmienić walutę dla tej transakcji?"
-    formControlName="changeCurrency"
-  >
-    <ktbz-radio [value]="true">Tak, zmieniam</ktbz-radio>
-    <hr class="separator" />
-    <ktbz-radio [value]="false">Nie, nie zmieniam</ktbz-radio>
-  </ktbz-radio-group>
+	<!--	<ktbz-radio-group-->
+	<!--		*ngIf="hasSelectedAccountDifferentCurrency"-->
+	<!--		label="Czy chcesz zmienić walutę dla tej transakcji?"-->
+	<!--		formControlName="changeCurrency"-->
+	<!--	>-->
+	<!--		<ktbz-radio [value]="true">Tak, zmieniam</ktbz-radio>-->
+	<!--		<hr class="separator" />-->
+	<!--		<ktbz-radio [value]="false">Nie, nie zmieniam</ktbz-radio>-->
+	<!--	</ktbz-radio-group>-->
 
-  <ktbz-dropdown
-    *ngIf="
-      hasSelectedAccountDifferentCurrency &&
-      expenseForm.controls['changeCurrency'].value
-    "
-    label="Waluta"
-    icon="currency-dollar"
-    formControlName="currency"
-    placeholder="Wybierz walutę"
-    [options]="currencies"
-    optionLabel="label"
-    optionValue="value"
-  ></ktbz-dropdown>
+	<!--	<ktbz-dropdown-->
+	<!--		*ngIf="hasSelectedAccountDifferentCurrency && expenseForm.controls['changeCurrency'].value"-->
+	<!--		label="Waluta"-->
+	<!--		icon="currency-dollar"-->
+	<!--		formControlName="currency"-->
+	<!--		placeholder="Wybierz walutę"-->
+	<!--		[options]="currencies"-->
+	<!--		optionLabel="label"-->
+	<!--		optionValue="value"-->
+	<!--	></ktbz-dropdown>-->
 
-  <ktbz-notification
-    *ngIf="
-      hasSelectedAccountDifferentCurrency &&
-      expenseForm.controls['changeCurrency'].value === false
-    "
-    [type]="'error'"
-    [closable]="false"
-    [withAction]="false"
-    [header]="'Uwaga'"
-    [message]="'Transakcja nie będzie wliczana w całkowite saldo'"
-  ></ktbz-notification>
+	<!--	<ktbz-notification-->
+	<!--		*ngIf="hasSelectedAccountDifferentCurrency && expenseForm.controls['changeCurrency'].value === false"-->
+	<!--		[type]="'error'"-->
+	<!--		[closable]="false"-->
+	<!--		[withAction]="false"-->
+	<!--		[header]="'Uwaga'"-->
+	<!--		[message]="'Transakcja nie będzie wliczana w całkowite saldo'"-->
+	<!--	></ktbz-notification>-->
 
-  <ktbz-radio-group label="Typ transakcji" formControlName="type">
-    <ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>
-    <hr class="separator" />
-    <ktbz-radio [value]="'OUTCOME'">Obciążenie</ktbz-radio>
-  </ktbz-radio-group>
+	<ktbz-radio-group label="Typ transakcji" formControlName="type">
+		<ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>
+		<hr class="separator" />
+		<ktbz-radio [value]="'OUTCOME'">Obciążenie</ktbz-radio>
+	</ktbz-radio-group>
 
-  <ktbz-dropdown
-    *ngIf="expenseForm.controls['type'].value"
-    label="Kategoria"
-    icon="currency-dollar"
-    formControlName="category"
-    placeholder="Wybierz kategorię"
-    [options]="categories"
-    optionLabel="name"
-    optionValue="id"
-  ></ktbz-dropdown>
+	<ng-container *ngIf="expenseForm.controls['type'].value">
+		<ktbz-dropdown
+			*ngIf="categories$ | async as categories"
+			label="Kategoria"
+			icon="currency-dollar"
+			[options]="categories"
+			formControlName="categoryId"
+			placeholder="Wybierz kategorię"
+			optionLabel="name"
+			optionValue="id"
+		></ktbz-dropdown>
+	</ng-container>
 
-  <ktbz-input
-    label="Data"
-    icon="calendar"
-    type="date"
-    formControlName="date"
-  ></ktbz-input>
+	<ktbz-input label="Data" icon="calendar" type="date" formControlName="date"></ktbz-input>
 
-  <button ktbzBtn variant="solid" class="sticky" (click)="addExpense()">
-    Dodaj
-  </button>
+	<button ktbzBtn variant="solid" class="sticky" (click)="addExpense()">Dodaj</button>
 </form>
+<ng-container *ngIf="sentAction$ | async"></ng-container>

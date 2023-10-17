@@ -1,12 +1,14 @@
 import { Route } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
-import { AuthStoreModule } from './store';
+import { AuthStoreModule } from '../core/store/auth';
+import { NotLoggedInGuard } from '../core/guards/logged-in.guard';
 
 export const AUTH_ROUTES: Route[] = [
 	{
 		path: 'auth',
 		loadComponent: () => import('./auth.component'),
 		providers: [importProvidersFrom(AuthStoreModule)],
+		canActivate: [NotLoggedInGuard],
 		children: [
 			{
 				path: 'login',

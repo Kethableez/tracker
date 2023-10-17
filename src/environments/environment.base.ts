@@ -1,5 +1,5 @@
-import { Currency } from 'src/app/tracker/core/enums/currencies.enum';
-import { LabelValue } from 'src/app/tracker/core/models/label-value.model';
+import { Currency } from '../app/core/enums/currencies.enum';
+import { LabelValue } from '../app/core/models/label-value.model';
 
 const currencies: LabelValue<Currency>[] = [
   {

@@ -1,33 +1,16 @@
 <form [formGroup]="categoryForm" class="form-group">
-  <ktbz-input
-    label="Nazwa kategorii"
-    icon="category"
-    formControlName="name"
-    placeholder="Nazwa będzie widoczna"
-  ></ktbz-input>
+	<ktbz-input label="Nazwa kategorii" icon="category" formControlName="name" placeholder="Nazwa będzie widoczna"></ktbz-input>
 
-  <ktbz-input
-    label="Limit"
-    placeholder="0,00 zł"
-    [required]="false"
-    icon="123"
-    type="numeric"
-    formControlName="limit"
-  ></ktbz-input>
+	<ktbz-input label="Limit" placeholder="0,00 zł" [required]="false" icon="123" type="numeric" formControlName="limit"></ktbz-input>
 
-  <ktbz-color-picker
-    label="Kolor kategorii"
-    icon="palette"
-    formControlName="color"
-  ></ktbz-color-picker>
+	<ktbz-color-picker label="Kolor kategorii" icon="palette" formControlName="color"></ktbz-color-picker>
 
-  <ktbz-radio-group label="Typ kategorii" formControlName="type">
-    <ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>
-    <hr class="separator" />
-    <ktbz-radio [value]="'OUTCOME'">Obciążenie</ktbz-radio>
-  </ktbz-radio-group>
+	<ktbz-radio-group label="Typ kategorii" formControlName="type">
+		<ktbz-radio [value]="'INCOME'">Uznanie</ktbz-radio>
+		<hr class="separator" />
+		<ktbz-radio [value]="'OUTCOME'">Obciążenie</ktbz-radio>
+	</ktbz-radio-group>
 
-  <button ktbzBtn variant="solid" class="sticky" (click)="testAuth()">
-    Dodaj
-  </button>
+	<button ktbzBtn variant="solid" class="sticky" (click)="addCategory()">Dodaj</button>
 </form>
+<ng-container *ngIf="sentAction$ | async"></ng-container>

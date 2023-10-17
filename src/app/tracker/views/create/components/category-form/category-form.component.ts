@@ -5,13 +5,14 @@ import { ColorPickerComponent } from 'src/app/shared/forms/color-picker/color-pi
 import { ButtonDirective } from 'src/app/shared/directives/button.directive';
 import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.component';
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
-import { NotificationService } from 'src/app/shared/notification/notification.service';
-import { AccountService } from 'src/app/tracker/core/services/account.service';
-import { FormService } from 'src/app/tracker/core/services/form.service';
+import { FormService } from '../../../../../core/services/form.service';
 import { RadioGroupComponent } from 'src/app/shared/forms/radio-group/radio-group.component';
 import { RadioComponent } from 'src/app/shared/forms/radio-group/radio/radio.component';
-import { CategoryService } from 'src/app/tracker/core/services/category.service';
-import { SomeService } from '../../../../core/services/kurwa.service';
+import { filter, tap, withLatestFrom } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { RootState } from '../../../../../core/store/root.state';
+import { NotificationActions } from '../../../../../core/store/notification';
+import { CategoryActions, categoryError, isCategoryInProgress } from '../../../../../core/store/category';
 
 @Component({
 	selector: 'ktbz-category-form',
@@ -33,40 +34,38 @@ import { SomeService } from '../../../../core/services/kurwa.service';
 })
 export class CategoryFormComponent implements OnInit {
 	categoryForm!: FormGroup;
+	isSent = false;
 
+	sentAction$ = this.store$.select(isCategoryInProgress).pipe(
+		filter((inProgress) => !inProgress && this.isSent),
+		withLatestFrom(this.store$.select(categoryError)),
+		tap(([inProgress, error]) => {
+			if (!error) {
+				this.formService.reset(this.categoryForm, { color: '#d9ddf2' });
+			}
+			this.isSent = false;
+			this.cdr.detectChanges();
+		})
+	);
 	constructor(
 		private builder: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private categoryService: CategoryService,
-		private notificationService: NotificationService,
-		private fs: FormService,
-		private kurwa: SomeService
+		private store$: Store<RootState>,
+		private formService: FormService
 	) {}
 
 	ngOnInit() {
 		this.initForm();
-		this.cdr.markForCheck();
 	}
 
 	addCategory() {
-		this.fs.markAsDirtyAndTouched(this.categoryForm);
+		this.formService.markAsDirtyAndTouched(this.categoryForm);
 		if (this.categoryForm.valid) {
-			this.notificationService.removeAll();
 			const payload = this.categoryForm.value;
-			this.categoryService.create(payload).subscribe({
-				next: (v) => console.log(v),
-				error: (err) => console.log(err),
-				complete: () => {
-					this.categoryForm.reset();
-					this.categoryForm.updateValueAndValidity();
-					this.cdr.markForCheck();
-				}
-			});
+			this.store$.dispatch(NotificationActions.CLEAR_ALL_NOTIFICATIONS());
+			this.store$.dispatch(CategoryActions.CREATE({ payload }));
+			this.isSent = true;
 		}
-	}
-
-	testAuth() {
-		this.kurwa.getCategories().subscribe(() => {});
 	}
 
 	private initForm() {

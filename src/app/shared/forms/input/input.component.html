@@ -1,67 +1,63 @@
 <div class="input__container">
-  <label
-    *ngIf="label"
-    class="text-secondary text-semi-bold"
-    [for]="controlName"
-  >
-    {{ label }} <span class="required-mark" *ngIf="required">*</span></label
-  >
+	<label *ngIf="label" class="text-secondary text-semi-bold" [for]="controlName">
+		{{ label }} <span class="required-mark" *ngIf="required">*</span>
+	</label>
 
-  <div class="input__row" [ngClass]="statusClass" (click)="openDatePicker()">
-    <i-tabler *ngIf="icon" [name]="icon" class="input__icon"></i-tabler>
-    <ng-container [ngSwitch]="type">
-      <input
-        *ngSwitchCase="'numeric'"
-        [id]="controlName"
-        class="default-input"
-        #input
-        [placeholder]="placeholder"
-        [formControl]="formControl"
-        [mask]="'separator.2'"
-        [specialCharacters]="['.', ',']"
-        [allowNegativeNumbers]="false"
-        [dropSpecialCharacters]="false"
-        [outputTransformFn]="outputFn"
-      />
-      <input
-        *ngSwitchCase="'date'"
-        [id]="controlName"
-        class="default-input"
-        #input
-        [value]="dateValue | date : 'dd.MM.YYYY'"
-        readonly
-        [placeholder]="placeholder"
-        [formControl]="formControl"
-      />
-      <input
-        *ngSwitchDefault
-        [id]="controlName"
-        class="default-input"
-        [type]="inputType"
-        #input
-        [placeholder]="placeholder"
-        [formControl]="formControl"
-      />
-    </ng-container>
-    <i-tabler *ngIf="type === 'password'" [name]="passwordIcon" class="input__icon" (click)="togglePasswordVisibility()"></i-tabler>
+	<div
+		class="input__row"
+		[class.valid]="isValid"
+		[class.invalid]="isInvalid"
+		[class.focus]="isFocused"
+		[class.readonly]="readonly"
+		(click)="openDatePicker()"
+	>
+		<i-tabler *ngIf="icon" [name]="icon" class="input__icon"></i-tabler>
+		<ng-container [ngSwitch]="type">
+			<input
+				*ngSwitchCase="'numeric'"
+				[id]="controlName"
+				class="default-input"
+				#input
+				[placeholder]="placeholder"
+				[formControl]="formControl"
+				[mask]="'separator.2'"
+				[specialCharacters]="['.', ',']"
+				[allowNegativeNumbers]="false"
+				[dropSpecialCharacters]="false"
+				[outputTransformFn]="outputFn"
+			/>
 
-  </div>
+			<input
+				*ngSwitchCase="'date'"
+				[id]="controlName"
+				class="default-input"
+				#input
+				[value]="dateValue | date: 'dd.MM.YYYY'"
+				readonly
+				[placeholder]="placeholder"
+				[formControl]="formControl"
+			/>
+			<input
+				*ngSwitchDefault
+				[id]="controlName"
+				class="default-input"
+				[type]="inputType"
+				#input
+				[placeholder]="placeholder"
+				[formControl]="formControl"
+			/>
+		</ng-container>
+		<i-tabler *ngIf="type === 'password'" [name]="passwordIcon" class="input__icon" (click)="togglePasswordVisibility()"></i-tabler>
+	</div>
 
-  <ktbz-input-error
-    [@expandCollapse]="validationEnabled"
-    *ngIf="validationEnabled && formControl.errors"
-    [errors]="formControl.errors"
-    [keys]="errorKeys"
-  ></ktbz-input-error>
+	<ktbz-input-error
+		[@expandCollapse]="validationEnabled"
+		*ngIf="validationEnabled && formControl.errors"
+		[errors]="formControl.errors"
+		[keys]="errorKeys"
+	></ktbz-input-error>
 </div>
-<div
-  class="input__calendar-container"
-  *ngIf="type === 'date' && isDatePickerVisible"
->
-  <ktbz-calendar
-    @slideInOutY
-    [givenDate]="dateValue"
-    (onDismiss)="closeDatePicker()"
-    (onSelectedDate)="patchDate($event)"
-  ></ktbz-calendar>
+<div class="input__calendar-container" *ngIf="type === 'date' && isDatePickerVisible">
+	<ktbz-calendar @slideInOutY [givenDate]="dateValue" (onDismiss)="closeDatePicker()" (onSelectedDate)="patchDate($event)"></ktbz-calendar>
 </div>
+<ng-container *ngIf="statusChanges$ | async"></ng-container>

@@ -1,19 +1,21 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Directive,
   ElementRef,
   HostListener,
   Injector,
   Input,
-  OnInit,
+  OnDestroy,
+  OnInit
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { ControlValueAccessor, FormControl, FormControlStatus, NgControl } from '@angular/forms';
+import { BehaviorSubject, map, Observable, of, repeat, repeatWhen, Subject, tap } from 'rxjs';
+import { isDirty } from 'ng-packagr/lib/graph/select';
 
 @Directive()
 export abstract class AbstractInputBase<T>
-  implements ControlValueAccessor, OnInit
-{
+  implements ControlValueAccessor, OnInit {
   @Input() skipValidation = false;
   @Input() label!: string;
   @Input() required = true;
@@ -25,10 +27,11 @@ export abstract class AbstractInputBase<T>
     const path = event.path || event.composedPath();
     const inPath = path.find((e: any) => e === this.elRef.nativeElement);
 
-    this.isFocused = !!inPath;
     if (!!inPath) {
+      this.isFocused = true;
       this.doOnFocusFn();
     } else {
+      this.isFocused = false;
       this.doOnBlurFn();
     }
   }
@@ -37,15 +40,9 @@ export abstract class AbstractInputBase<T>
 
   abstract doOnBlurFn(): void;
 
-  get isPristine() {
-    return !this.isTouched && !this.isDirty;
-  }
-
   abstract value: T;
 
   abstract doOnInit(): void;
-
-  status$ = new BehaviorSubject<'valid' | 'invalid' | 'pending'>('invalid');
 
   public isFocused = false;
   public ngControl!: NgControl;
@@ -59,21 +56,20 @@ export abstract class AbstractInputBase<T>
       this.isDirty &&
       this.isTouched &&
       !this.disabled &&
-      !this.readonly &&
-      !this.isFocused
+      !this.readonly
     );
   }
 
-  get statusClass() {
-    if (this.disabled) return 'disabled';
-    if (this.readonly) return 'readonly';
-    if (this.validationEnabled && !this.skipValidation) {
-      if (this.formControl.valid) return 'valid';
-      if (this.formControl.invalid) return 'invalid';
-      if (this.formControl.pending) return 'pending';
-    }
-    if (this.isFocused) return 'focus';
-    return '';
+  get statusChanges$() {
+    return this.formControl.statusChanges;
+  }
+
+  get isValid() {
+    return this.validationEnabled ? this.formControl.valid : false;
+  }
+
+  get isInvalid() {
+    return this.validationEnabled ? this.formControl.invalid : false;
   }
 
   get disabled(): boolean {
@@ -102,16 +98,19 @@ export abstract class AbstractInputBase<T>
 
   constructor(
     protected readonly injector: Injector,
-    protected cdr: ChangeDetectorRef,
     protected elRef: ElementRef
-  ) {}
+  ) {
+  }
 
-  onChange = (value: T): void => {};
+  onChange = (value: T): void => {
+  };
 
-  onTouch = (): void => {};
+  onTouch = (): void => {
+  };
 
   writeValue(value: T): void {
     this.value = value;
+    this.doUpdate();
   }
 
   registerOnChange(fn: any): void {
@@ -131,4 +130,5 @@ export abstract class AbstractInputBase<T>
     this.onChange(this.value);
     this.onTouch();
   }
+
 }

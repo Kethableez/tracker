@@ -1,0 +1,11 @@
+<div class="notifications-container" *ngIf="notifications$ | async as notifications" [class.with-padding]='notifications.length'>
+  <ktbz-notification *ngFor="let notification of notifications; let i = index"
+                     [id]="i"
+                     [header]="notification.header"
+                     [message]="notification.message"
+                     [type]="notification.type"
+                     [withAction]="false"
+                     [closable]="true"
+
+  ></ktbz-notification>
+</div>

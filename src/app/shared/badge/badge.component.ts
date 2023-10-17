@@ -35,14 +35,6 @@ export class BadgeComponent {
 
   @ContentChild('badgeContent') content!: ElementRef;
 
-  @HostBinding('class') get positionIfAbsolute() {
-    if (this.isAbsolute) {
-      const pos = `badge--absolute-${this.absolutePosition}`;
-      return this.isDot ? `${pos}--dot` : pos;
-    }
-    return null;
-  }
-
   get withBorder() {
     return this.isAbsolute ? 'badge--border' : '';
   }

@@ -7,4 +7,4 @@
     <button ktbzBtn variant="solid" (click)="createAccount()">Zarejestruj się </button>
   </div>
 </form>
-<ng-container *ngIf="isRegisterCompleted$ | async"></ng-container>
+<ng-container *ngIf='sentAction$ | async '></ng-container>

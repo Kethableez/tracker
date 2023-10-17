@@ -4,12 +4,13 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ButtonDirective } from '../../../shared/directives/button.directive';
 import { InputComponent } from '../../../shared/forms/input/input.component';
 import { RouterModule } from '@angular/router';
-import { FormService } from '../../../tracker/core/services/form.service';
+import { FormService } from '../../../core/services/form.service';
+import { filter, tap, withLatestFrom } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 import { Store } from '@ngrx/store';
-import { RootState } from '../../../tracker/core/store/app.states';
-import { login } from '../../store/auth.actions';
-import { AuthCompletedWithSuccess } from '../../store';
-import { filter, tap } from 'rxjs';
+import { RootState } from '../../../core/store/root.state';
+import { NotificationActions } from '../../../core/store/notification';
+import { AuthActions, authError, isAuthInProgress } from '../../../core/store/auth';
 
 @Component({
 	selector: 'ktbz-login-form',
@@ -22,22 +23,29 @@ import { filter, tap } from 'rxjs';
 })
 export default class LoginFormComponent implements OnInit {
 	loginForm!: FormGroup;
-	isSent!: boolean;
+	isSent = false;
 
-	isLoginCompleted$ = this.store$.select(AuthCompletedWithSuccess).pipe(
-		filter(() => this.isSent),
-		tap(() => this.resetForm())
+	sentAction$ = this.store$.select(isAuthInProgress).pipe(
+		filter((inProgress) => !inProgress && this.isSent),
+		withLatestFrom(this.store$.select(authError)),
+		tap(([inProgress, error]) => {
+			if (!error) {
+				this.formService.reset(this.loginForm);
+			}
+			this.isSent = false;
+			this.cdr.markForCheck();
+		})
 	);
 
 	constructor(
 		private builder: FormBuilder,
 		private formService: FormService,
-		private store$: Store<RootState>,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		private authService: AuthService,
+		private store$: Store<RootState>
 	) {}
 
 	ngOnInit() {
-		this.isSent = false;
 		this.initForm();
 	}
 
@@ -45,7 +53,8 @@ export default class LoginFormComponent implements OnInit {
 		this.formService.markAsDirtyAndTouched(this.loginForm);
 		if (this.loginForm.valid) {
 			const payload = this.loginForm.value;
-			this.store$.dispatch(login({ payload }));
+			this.store$.dispatch(NotificationActions.CLEAR_ALL_NOTIFICATIONS());
+			this.store$.dispatch(AuthActions.LOGIN({ payload }));
 			this.isSent = true;
 		}
 	}
@@ -55,13 +64,5 @@ export default class LoginFormComponent implements OnInit {
 			username: new FormControl(null, Validators.required),
 			password: new FormControl(null, Validators.required)
 		});
-	}
-
-	private resetForm() {
-		this.loginForm.reset();
-		this.loginForm.markAsPristine();
-		this.loginForm.markAsUntouched();
-		this.loginForm.updateValueAndValidity();
-		this.cdr.markForCheck();
 	}
 }

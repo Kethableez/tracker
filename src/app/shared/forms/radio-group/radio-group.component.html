@@ -2,7 +2,7 @@
   <label class="text-secondary text-semi-bold" [for]="controlName">
     {{ label }} <span class="required-mark" *ngIf="required">*</span></label
   >
-  <div class="radio-group__row" [ngClass]="statusClass">
+  <div class="radio-group__row">
     <ng-content></ng-content>
   </div>
   <ktbz-input-error

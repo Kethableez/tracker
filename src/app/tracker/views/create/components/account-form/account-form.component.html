@@ -1,35 +1,19 @@
 <form [formGroup]="accountForm" class="form-group">
-  <ktbz-input
-    label="Saldo początkowe"
-    placeholder="0,00 zł"
-    icon="123"
-    type="numeric"
-    formControlName="balance"
-  ></ktbz-input>
+	<ktbz-input label="Saldo początkowe" placeholder="0,00 zł" icon="123" type="numeric" formControlName="balance"></ktbz-input>
 
-  <ktbz-dropdown
-    label="Waluta"
-    icon="currency-dollar"
-    formControlName="currency"
-    placeholder="Wybierz walutę"
-    [options]="currencies"
-    optionLabel="label"
-    optionValue="value"
-  ></ktbz-dropdown>
-  <ktbz-input
-    label="Nazwa"
-    icon="wallet"
-    formControlName="name"
-    placeholder="Nazwa będzie widoczna"
-  ></ktbz-input>
+	<ktbz-dropdown
+		label="Waluta"
+		icon="currency-dollar"
+		formControlName="currency"
+		placeholder="Wybierz walutę"
+		[options]="currencies"
+		optionLabel="label"
+		optionValue="value"
+	></ktbz-dropdown>
+	<ktbz-input label="Nazwa" icon="wallet" formControlName="name" placeholder="Nazwa będzie widoczna"></ktbz-input>
 
-  <ktbz-color-picker
-    label="Kolor konta"
-    icon="palette"
-    formControlName="color"
-  ></ktbz-color-picker>
+	<ktbz-color-picker label="Kolor konta" icon="palette" formControlName="color"></ktbz-color-picker>
 
-  <button ktbzBtn variant="solid" class="sticky" (click)="addAccount()">
-    Dodaj
-  </button>
+	<button ktbzBtn variant="solid" class="sticky" (click)="addAccount()">Dodaj</button>
 </form>
+<ng-container *ngIf="sentAction$ | async"></ng-container>

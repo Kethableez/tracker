@@ -6,7 +6,7 @@ import {
   Component,
   ElementRef,
   Injector,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { ButtonDirective } from '../../directives/button.directive';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
@@ -26,38 +26,37 @@ import { expandCollapse } from '../../animations/expand-collapse.animation';
     ReactiveFormsModule,
     ButtonDirective,
     TablerIconsModule,
-    InputErrorComponent,
+    InputErrorComponent
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: ColorPickerComponent,
-      multi: true,
-    },
+      multi: true
+    }
   ],
-  animations: [expandCollapse],
+  animations: [expandCollapse]
 })
 export class ColorPickerComponent
   extends AbstractInput<string | null>
-  implements OnInit
-{
+  implements OnInit {
   value: string | null = null;
 
-  // @Input() numericType: 'int' | 'dec'
-
   constructor(
-    protected override readonly cdr: ChangeDetectorRef,
     protected override readonly injector: Injector,
     protected override readonly elRef: ElementRef
   ) {
-    super(injector, cdr, elRef);
+    super(injector, elRef);
   }
 
-  override doOnInit(): void {}
+  override doOnInit(): void {
+  }
 
-  override doOnFocusFn(): void {}
+  override doOnFocusFn(): void {
+  }
 
-  override doOnBlurFn(): void {}
+  override doOnBlurFn(): void {
+  }
 
   getRandomColor() {
     const h = Math.floor(Math.random() * 360);

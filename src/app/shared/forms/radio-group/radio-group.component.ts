@@ -37,10 +37,9 @@ export class RadioGroupComponent<T>
 
   constructor(
     protected override elRef: ElementRef,
-    protected override cdr: ChangeDetectorRef,
     protected override injector: Injector
   ) {
-    super(injector, cdr, elRef);
+    super(injector, elRef);
   }
   override doOnFocusFn(): void {}
   override doOnBlurFn(): void {}
@@ -50,14 +49,9 @@ export class RadioGroupComponent<T>
     this.writeValue(value);
     this.doUpdate();
     this.formControl.updateValueAndValidity();
-    this.cdr.markForCheck();
   }
 
   isSelected(value: T) {
     return value === this.controlValue;
-  }
-
-  get parentCdr() {
-    return this.cdr;
   }
 }

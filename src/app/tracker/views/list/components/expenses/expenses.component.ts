@@ -15,10 +15,10 @@ import {
 } from '@angular/forms';
 import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.component';
 import { CollapseComponent } from 'src/app/shared/collapse/collapse.component';
-import { DetailedExpenseService } from 'src/app/tracker/core/services/detailed-expense.service';
-import { DetailedExpense } from 'src/app/tracker/core/models/detailed-expense.model';
+import { DetailedExpenseService } from '../../../../../core/services/detailed-expense.service';
+import { DetailedExpense } from '../../../../../core/models/detailed-expense.model';
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
-import { Filter } from 'src/app/tracker/core/models/filter.model';
+import { Filter } from '../../../../../core/models/filter.model';
 
 @Component({
   selector: 'ktbz-expenses-list',

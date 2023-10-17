@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { ListComponent } from 'src/app/shared/list/list.component';
 import { TableComponent } from 'src/app/shared/table/table.component';
-import { Account } from 'src/app/tracker/core/models/account.model';
-import { AccountService } from 'src/app/tracker/core/services/account.service';
+import { Account } from '../../../../../core/models/account.model';
+import { AccountService } from '../../../../../core/services/account.service';
 import { CurrencyPipe } from '../../../dashboard/components/summary/summary.component';
 import {
   FormBuilder,
@@ -19,9 +19,9 @@ import {
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
 import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.component';
 import { CollapseComponent } from 'src/app/shared/collapse/collapse.component';
-import { Category } from 'src/app/tracker/core/models/category.model';
-import { CategoryService } from 'src/app/tracker/core/services/category.service';
-import { Filter } from 'src/app/tracker/core/models/filter.model';
+import { Category } from '../../../../../core/models/category.model';
+import { CategoryService } from '../../../../../core/services/category.service';
+import { Filter } from '../../../../../core/models/filter.model';
 
 @Component({
   selector: 'ktbz-categories-list',

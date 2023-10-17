@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { ListComponent } from 'src/app/shared/list/list.component';
 import { TableComponent } from 'src/app/shared/table/table.component';
-import { Account } from 'src/app/tracker/core/models/account.model';
-import { AccountService } from 'src/app/tracker/core/services/account.service';
+import { Account } from '../../../../../core/models/account.model';
+import { AccountService } from '../../../../../core/services/account.service';
 import { CurrencyPipe } from '../../../dashboard/components/summary/summary.component';
 import {
   FormBuilder,
@@ -19,10 +19,10 @@ import {
 import { InputComponent } from 'src/app/shared/forms/input/input.component';
 import { DropdownComponent } from 'src/app/shared/forms/dropdown/dropdown.component';
 import { CollapseComponent } from 'src/app/shared/collapse/collapse.component';
-import { AccountBalanceService } from 'src/app/tracker/core/services/account-balance.service';
+import { AccountBalanceService } from '../../../../../core/services/account-balance.service';
 import { map, switchMap } from 'rxjs';
-import { AccountBalance } from 'src/app/tracker/core/models/account-balance.model';
-import { Filter } from 'src/app/tracker/core/models/filter.model';
+import { AccountBalance } from '../../../../../core/models/account-balance.model';
+import { Filter } from '../../../../../core/models/filter.model';
 
 @Component({
   selector: 'ktbz-accounts-list',

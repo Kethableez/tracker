@@ -1,0 +1,40 @@
+:host-context {
+  z-index: 999;
+  position: absolute;
+  top: 16px;
+  right: 0;
+
+  overflow-x: hidden;
+}
+
+.notifications-container {
+  padding-inline: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@media screen and (min-width: 425px) {
+  :host-context {
+    right: 0;
+    width: calc(400px);
+    max-width: calc(400px);
+  }
+}
+
+@media screen and (max-width: 424px) {
+  :host-context {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+
+    ktbz-notifiation {
+      flex-grow: 1;
+      width: 500px;
+    }
+  }
+}
+
+.with-padding {
+  padding-bottom: 16px;
+}

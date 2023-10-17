@@ -17,7 +17,7 @@ export class ErrorPipe implements PipeTransform {
       case 'maxlength':
         return `This field requires less than ${value.requiredLength} characters`;
       case 'taken':
-        return `This ${value.field} is taken`;
+        return `This username is taken`;
       case 'pattern':
         return 'Invalid pattern';
       case 'mustMatch':

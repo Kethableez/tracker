@@ -6,32 +6,26 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { AccountFormComponent } from './components/account-form/account-form.component';
 
 @Component({
-  selector: 'ktbz-create',
-  templateUrl: 'create.component.html',
-  styleUrls: ['./create.component.scss'],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    SegmentedTabsComponent,
-    ExpenseFormComponent,
-    CategoryFormComponent,
-    AccountFormComponent,
-  ],
+	selector: 'ktbz-create',
+	templateUrl: 'create.component.html',
+	styleUrls: ['./create.component.scss'],
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [CommonModule, SegmentedTabsComponent, ExpenseFormComponent, CategoryFormComponent, AccountFormComponent]
 })
 export class CreateComponent {
-  activeForm = 'expense';
+	activeForm = 'category';
 
-  readonly TABS = [
-    {
-      label: 'Expense',
-      value: 'expense',
-    },
-    { label: 'Category', value: 'category' },
-    { label: 'Account', value: 'account' },
-  ];
+	readonly TABS = [
+		{
+			label: 'Expense',
+			value: 'expense'
+		},
+		{ label: 'Category', value: 'category' },
+		{ label: 'Account', value: 'account' }
+	];
 
-  selectCreateForm(tab: string) {
-    this.activeForm = tab;
-  }
+	selectCreateForm(tab: string) {
+		this.activeForm = tab;
+	}
 }
